@@ -60,7 +60,7 @@
     <ul class="menu-inner py-1">
         <!-- Dashboard -->
         <li class="menu-item {{ $active == 'dashboard' ? 'active' : '' }}">
-            <a href="/" class="menu-link">
+            <a href="/dashboard" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
             </a>
@@ -102,7 +102,7 @@
         <li class="menu-item {{ $active == 'ms' ? 'active' : '' }}">
             <a href="/major/student" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-table"></i>
-                <div data-i18n="Tables">Major Student   </div>
+                <div data-i18n="Tables">Major Student </div>
             </a>
         </li>
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Examination</span></li>
@@ -116,8 +116,7 @@
         <!-- Auth -->
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Auth</span></li>
         <li class="menu-item">
-            <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues" target="_blank"
-                class="menu-link">
+            <a href="/auth/logout" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-support"></i>
                 <div data-i18n="Support">Logout</div>
             </a>
