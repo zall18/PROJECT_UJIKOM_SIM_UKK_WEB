@@ -1,11 +1,12 @@
+
 @extends('index')
 
 @section('container')
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tables /</span> User Tables</h4>
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tables /</span> Admin Tables</h4>
 
     <!-- Basic Bootstrap Table -->
     <div class="card">
-        <h5 class="card-header">Table User</h5>
+        <h5 class="card-header">Table Admin</h5>
         <div class="table-responsive text-nowrap">
             <table class="table">
                 <thead>
@@ -14,13 +15,11 @@
                         <th>Full Name</th>
                         <th>Email</th>
                         <th>Phone</th>
-                        <th>Role</th>
-                        <th>Active</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    @foreach ($users as $index => $item)
+                    @foreach ($admins as $index => $item)
                         <tr>
                             <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{ $index + 1 }}</strong>
                             </td>
@@ -29,8 +28,7 @@
                                 {{ $item->email }}
                             </td>
                             <td>{{ $item->phone }}</td>
-                            <td>{{ $item->role }}</td>
-                            <td>{{ $item->is_active == 1 ? 'Active' : 'Non-Active' }}</td>
+
                             <td>
                                 <div class="dropdown">
                                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
@@ -54,8 +52,9 @@
         </div>
     </div>
     <!--/ Basic Bootstrap Table -->
-
+{{--
     <div class="buy-now">
         <a href="/user/create" class="btn btn-danger btn-buy-now">Create User Data</a>
-    </div>
+    </div> --}}
+
 @endsection

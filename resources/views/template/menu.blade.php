@@ -47,7 +47,7 @@
                     </g>
                 </svg>
             </span>
-            <span class="app-brand-text demo menu-text fw-bolder ms-2">Sneat</span>
+            <span class="app-brand-text demo menu-text fw-bolder ms-2">SIM UKK</span>
         </a>
 
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -59,7 +59,7 @@
 
     <ul class="menu-inner py-1">
         <!-- Dashboard -->
-        <li class="menu-item active">
+        <li class="menu-item {{ $active == 'dashboard' ? 'active' : '' }}">
             <a href="/" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
@@ -67,24 +67,42 @@
         </li>
 
         <!-- Components -->
-        <li class="menu-header small text-uppercase"><span class="menu-header-text">Components</span></li>
+        <li class="menu-header small text-uppercase"><span class="menu-header-text">Managment</span></li>
 
-        <li class="menu-item">
+        <li class="menu-item {{ $active == 'user' ? 'active' : '' }}">
             <a href="/user/managment" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-table"></i>
                 <div data-i18n="Tables">User Managment</div>
             </a>
         </li>
-        <li class="menu-item">
+        <li class="menu-item {{ $active == 'assessor' ? 'active' : '' }}">
             <a href="/assessor/managment" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-table"></i>
                 <div data-i18n="Tables">Assessor Managment</div>
             </a>
         </li>
-        <li class="menu-item">
+        <li class="menu-item {{ $active == 'major' ? 'active' : '' }}">
             <a href="/major/managment" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-table"></i>
                 <div data-i18n="Tables">Major Managment</div>
+            </a>
+        </li>
+        <li class="menu-item {{ $active == 'student' ? 'active' : '' }}">
+            <a href="/student/managment" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-table"></i>
+                <div data-i18n="Tables">Student Managment</div>
+            </a>
+        </li>
+        <li class="menu-item {{ $active == 'admin' ? 'active' : '' }}">
+            <a href="/admin/managment" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-table"></i>
+                <div data-i18n="Tables">Admin Managment</div>
+            </a>
+        </li>
+        <li class="menu-item {{ $active == 'ms' ? 'active' : '' }}">
+            <a href="/major/student" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-table"></i>
+                <div data-i18n="Tables">Major Student   </div>
             </a>
         </li>
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Examination</span></li>

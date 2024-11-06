@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Major;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class MajorController extends Controller
@@ -10,6 +11,7 @@ class MajorController extends Controller
     public function index()
     {
         $data['majors'] = Major::all();
+        $data['active'] = 'major';
         return view('admin.majorManage', $data);
     }
 
@@ -65,5 +67,18 @@ class MajorController extends Controller
     {
         Major::where('id', $request->id)->delete();
         return redirect('major/managment');
+    }
+
+    public function ms()
+    {
+        $data['majors'] = Major::all();
+        $data['active'] = 'ms';
+        return view('admin.majorStudent', $data);
+    }
+    public function mstudent(Request $request)
+    {
+        $data['students'] = Student::where('major_id', $request->id)->get();
+        $data['active'] = 'ms';
+        return view('admin.majorStudentTable', $data);
     }
 }
