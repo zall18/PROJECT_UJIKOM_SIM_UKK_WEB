@@ -7,6 +7,7 @@ use App\Models\Major;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
@@ -21,6 +22,7 @@ class UserController extends Controller
     public function createPage()
     {
         $data['majors'] = Major::all();
+        $data['active'] = 'user';
         return view('admin.userCreate', $data);
     }
 
@@ -111,6 +113,7 @@ class UserController extends Controller
 
         $data['user'] = User::where('id', $request->id)->first();
         $data['majors'] = Major::all();
+        $data['active'] = 'user';
         return view('admin.userUpdate', $data);
 
     }
@@ -200,5 +203,12 @@ class UserController extends Controller
         $data['admins'] = User::where('role', 'admin')->get();
         $data['active'] = 'admin';
         return view('admin.adminManage', $data);
+    }
+
+    public function userAdmin()
+    {
+        $data['user'] = Auth::user();
+        $data['active'] = 'dashboard';
+        return view('admin.adminProfile', $data);
     }
 }

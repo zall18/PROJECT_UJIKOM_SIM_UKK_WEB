@@ -10,4 +10,9 @@ class Major extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function competency_standard()
+    {
+        return $this->hasMany(CompetencyStandard::class);
+    }
 }

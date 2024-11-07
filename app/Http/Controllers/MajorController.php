@@ -17,7 +17,8 @@ class MajorController extends Controller
 
     public function createPage()
     {
-        return view('admin.majorCreate');
+        $data['active'] = 'major';
+        return view('admin.majorCreate', $data);
     }
 
     public function create(Request $request)
@@ -42,6 +43,7 @@ class MajorController extends Controller
     public function updatePage(Request $request)
     {
         $data['major'] = Major::find($request->id);
+        $data['active'] = 'major';
         return view('admin.majorUpdate', $data);
     }
 

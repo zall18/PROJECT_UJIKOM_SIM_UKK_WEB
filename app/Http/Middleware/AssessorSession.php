@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Http\Middleware;
-use Illuminate\Support\Facades\Auth;
+
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminSession
+class AssessorSession
 {
     /**
      * Handle an incoming request.
@@ -15,7 +16,7 @@ class AdminSession
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->role === 'admin') {
+        if (Auth::check() && Auth::user()->role === 'assessor') {
             return $next($request);
         }
         return redirect('/');

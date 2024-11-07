@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\AssessorController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CompetencyElementController;
+use App\Http\Controllers\CompetencyStandardController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
+use App\Models\CompetencyElement;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,7 +30,7 @@ Route::get('/', function () {
 
 
 Route::middleware('admin.session')->group(function () {
-    Route::get('/dashboard', function () {
+    Route::get('/admin/dashboard', function () {
         $data['active'] = 'dashboard';
         return view('admin.dashboard', $data);
     });
@@ -48,5 +51,18 @@ Route::middleware('admin.session')->group(function () {
     Route::get('/admin/managment', [UserController::class, 'Admins']);
     Route::get('/major/student', [MajorController::class, 'ms']);
     Route::get('/major/student/{id}', [MajorController::class, 'mstudent']);
+    Route::get('/me', [UserController::class,'userAdmin']);
 
+});
+
+Route::middleware('assessor.session')->group(function () {
+    Route::get('/assessor/dashboard', function () {
+        $data['active'] = 'dashboard';
+        return view('assessor.dashboard', $data);
+    });
+    Route::get('/competency-standard/managment', [CompetencyStandardController::class,'index']);
+    Route::get('/competency-standard/create', [CompetencyStandardController::class,'createPage']);
+    Route::post('/competency-standard/create', [CompetencyStandardController::class,'create']);
+    Route::get('/competency-standard/competency-elements/{id}', [CompetencyElementController::class,'index']);
+    Route::post('/competency-standard/competency-elements', [CompetencyElementController::class,'create']);
 });

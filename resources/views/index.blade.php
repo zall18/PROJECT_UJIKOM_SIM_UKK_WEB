@@ -57,11 +57,19 @@
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
-            @include('template.menu')
+            @if (Auth::user()->role == 'admin')
+                @include('template.admin.menu')
+            @else
+                @include('template.assessor.menu')
+            @endif
 
             <!-- Layout container -->
             <div class="layout-page">
-                @include('template.navbar')
+                @if (Auth::user()->role == 'admin')
+                    @include('template.admin.navbar')
+                @else
+                    @include('template.assessor.navbar')
+                @endif
 
                 <!-- Content wrapper -->
                 <div class="content-wrapper">

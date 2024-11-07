@@ -69,56 +69,19 @@
         <!-- Components -->
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Managment</span></li>
 
-        <li class="menu-item {{ $active == 'user' ? 'active' : '' }}">
-            <a href="/user/managment" class="menu-link">
+        <li class="menu-item {{ $active == 'competency' ? 'active' : '' }}">
+            <a href="/competency-standard/managment" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-table"></i>
-                <div data-i18n="Tables">User Managment</div>
+                <div data-i18n="Tables">Competency Standards</div>
             </a>
         </li>
-        <li class="menu-item {{ $active == 'assessor' ? 'active' : '' }}">
-            <a href="/assessor/managment" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-table"></i>
-                <div data-i18n="Tables">Assessor Managment</div>
-            </a>
-        </li>
-        <li class="menu-item {{ $active == 'major' ? 'active' : '' }}">
-            <a href="/major/managment" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-table"></i>
-                <div data-i18n="Tables">Major Managment</div>
-            </a>
-        </li>
-        <li class="menu-item {{ $active == 'student' ? 'active' : '' }}">
-            <a href="/student/managment" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-table"></i>
-                <div data-i18n="Tables">Student Managment</div>
-            </a>
-        </li>
-        <li class="menu-item {{ $active == 'admin' ? 'active' : '' }}">
-            <a href="/admin/managment" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-table"></i>
-                <div data-i18n="Tables">Admin Managment</div>
-            </a>
-        </li>
-        <li class="menu-item {{ $active == 'ms' ? 'active' : '' }}">
-            <a href="/major/student" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-table"></i>
-                <div data-i18n="Tables">Major Student </div>
-            </a>
-        </li>
+
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Examination</span></li>
         <li class="menu-item">
             <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues" target="_blank"
                 class="menu-link">
                 <i class="menu-icon tf-icons bx bx-support"></i>
                 <div data-i18n="Support">Exam history</div>
-            </a>
-        </li>
-        <!-- Auth -->
-        <li class="menu-header small text-uppercase"><span class="menu-header-text">Auth</span></li>
-        <li class="menu-item">
-            <a href="/auth/logout" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-support"></i>
-                <div data-i18n="Support">Logout</div>
             </a>
         </li>
     </ul>
