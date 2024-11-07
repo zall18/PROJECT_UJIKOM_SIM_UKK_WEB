@@ -51,7 +51,7 @@ Route::middleware('admin.session')->group(function () {
     Route::get('/admin/managment', [UserController::class, 'Admins']);
     Route::get('/major/student', [MajorController::class, 'ms']);
     Route::get('/major/student/{id}', [MajorController::class, 'mstudent']);
-    Route::get('/me', [UserController::class,'userAdmin']);
+    Route::get('/me', [UserController::class, 'userAdmin']);
 
 });
 
@@ -60,9 +60,13 @@ Route::middleware('assessor.session')->group(function () {
         $data['active'] = 'dashboard';
         return view('assessor.dashboard', $data);
     });
-    Route::get('/competency-standard/managment', [CompetencyStandardController::class,'index']);
-    Route::get('/competency-standard/create', [CompetencyStandardController::class,'createPage']);
-    Route::post('/competency-standard/create', [CompetencyStandardController::class,'create']);
-    Route::get('/competency-standard/competency-elements/{id}', [CompetencyElementController::class,'index']);
-    Route::post('/competency-standard/competency-elements', [CompetencyElementController::class,'create']);
+    Route::get('/competency-standard/managment', [CompetencyStandardController::class, 'index']);
+    Route::get('/competency-standard/create', [CompetencyStandardController::class, 'createPage']);
+    Route::post('/competency-standard/create', [CompetencyStandardController::class, 'create']);
+    Route::get('/competency-standard/competency-elements/{id}', [CompetencyElementController::class, 'index']);
+    Route::post('/competency-standard/competency-elements', [CompetencyElementController::class, 'create']);
+    Route::get('/competency-standard/detail/{id}', [CompetencyStandardController::class, 'detailPage']);
+    Route::get('/competency-standard/competency-elements/update/{cid}/{id}', [CompetencyElementController::class, 'updatePage']);
+    Route::post('/competency-standard/competency-elements/update/{cid}/{id}', [CompetencyElementController::class, 'update']);
+    Route::get('/competency-standard/competency-elements/delete/{cid}/{id}', [CompetencyElementController::class, 'delete']);
 });

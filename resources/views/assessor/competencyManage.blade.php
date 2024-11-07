@@ -1,4 +1,3 @@
-
 @extends('index')
 
 @section('container')
@@ -37,11 +36,9 @@
                                         <i class="bx bx-dots-vertical-rounded"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="/user/update/{{ $item->id }}"><i
-                                                class="bx bx-edit-alt me-1"></i>
-                                            Edit</a>
-                                        <a class="dropdown-item" href="/user/delete/{{ $item->id }}"><i class="bx bx-trash me-1"></i>
-                                            Delete</a>
+                                        <a class="dropdown-item" href="/competency-standard/detail/{{ $item->id }}"><i
+                                                class='bx bx-search-alt-2'></i>
+                                            View</a>
                                     </div>
                                 </div>
                             </td>
@@ -57,5 +54,4 @@
     <div class="buy-now">
         <a href="/competency-standard/create" class="btn btn-danger btn-buy-now">Create Competenncy Standard</a>
     </div>
-
 @endsection
