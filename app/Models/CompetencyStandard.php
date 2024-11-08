@@ -20,4 +20,9 @@ class CompetencyStandard extends Model
     {
         return $this->hasMany(CompetencyElement::class);
     }
+
+    public function examinations()
+    {
+        return $this->hasMany(Examination::class);
+    }
 }

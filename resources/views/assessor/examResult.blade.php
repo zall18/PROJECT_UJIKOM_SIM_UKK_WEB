@@ -32,7 +32,7 @@
                                         <i class="bx bx-dots-vertical-rounded"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="/exam/result/student"><i
+                                        <a class="dropdown-item" href="/exam/result/{{ $item->id }}/student"><i
                                                 class='bx bx-search-alt-2'></i>
                                             See Exam Result</a>
                                     </div>

@@ -73,7 +73,7 @@ Route::middleware('assessor.session')->group(function () {
     Route::get('/competency-standard/competency-elements/update/{cid}/{id}', [CompetencyElementController::class, 'updatePage']);
     Route::post('/competency-standard/competency-elements/update/{cid}/{id}', [CompetencyElementController::class, 'update']);
     Route::get('/competency-standard/competency-elements/delete/{cid}/{id}', [CompetencyElementController::class, 'delete']);
-    Route::get('/exam/result', [CompetencyElementController::class,'examResult']);
-    Route::get('/exam/result/report', [CompetencyElementController::class,'examResultReport']);
-    Route::get('/exam/result/student', [ExaminationController::class,'result']);
+    Route::get('/exam/result', [CompetencyElementController::class, 'examResult']);
+    Route::get('/exam/result/report', [CompetencyElementController::class, 'examResultReport']);
+    Route::get('/exam/result/{id}/student', [ExaminationController::class, 'result']);
 });

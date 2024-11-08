@@ -10,4 +10,14 @@ class Examination extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function competency_standard()
+    {
+        return $this->belongsTo(CompetencyStandard::class);
+    }
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
 }
