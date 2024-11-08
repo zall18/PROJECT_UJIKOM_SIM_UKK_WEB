@@ -10,4 +10,14 @@ class CompetencyElement extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function examintions()
+    {
+        return $this->hasMany(CompetencyElement::class);
+    }
+
+    public function competency_standard()
+    {
+        return $this->belongsTo(CompetencyStandard::class);
+    }
 }

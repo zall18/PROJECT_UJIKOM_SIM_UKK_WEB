@@ -15,4 +15,9 @@ class CompetencyStandard extends Model
     {
         return $this->belongsTo(Major::class);
     }
+
+    public function competency_elements()
+    {
+        return $this->hasMany(CompetencyElement::class);
+    }
 }

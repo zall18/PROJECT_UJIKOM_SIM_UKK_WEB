@@ -3,7 +3,7 @@
 @section('container')
     <div class="card h-auto">
         <div class="d-flex align-items-end row">
-            <div class="col-sm-7">
+            <div class="col-sm-12">
                 <div class="card-body">
                     <h5 class="card-title text-primary">{{ $competency->unit_title }}</h5>
                     <p class="mb-1">
@@ -12,12 +12,19 @@
                     <p class="mb-4">
                         {{ $competency->unit_description }}
                     </p>
+                    <a href="/competency-standard/delete/{{ $competency->id }}" class="">
+                        <button type="submit" class="btn btn-danger w-100 mb-2">Delete Competecy Standard</button>
+                    </a>
+                    <a href="/competency-standard/update/{{ $competency->id }}">
+                        <button type="submit" class="btn btn-primary w-100">Update Competecy Standard</button>
+                    </a>
                 </div>
             </div>
         </div>
+
     </div>
     <div class="card mt-3">
-        <h5 class="card-header">Table Competency Standard</h5>
+        <h5 class="card-header">Table Competency Elements</h5>
         <div class="table-responsive text-nowrap">
             <table class="table">
                 <thead>

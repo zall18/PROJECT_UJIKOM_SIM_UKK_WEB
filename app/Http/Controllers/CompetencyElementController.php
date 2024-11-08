@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\CompetencyElement;
+use App\Models\CompetencyStandard;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CompetencyElementController extends Controller
 {
@@ -66,5 +68,18 @@ class CompetencyElementController extends Controller
 
         return redirect('/competency-standard/detail/' . $request->cid);
 
+    }
+
+    public function examResult()
+    {
+        $data['active'] = 'examResult';
+        $data['competencies'] = CompetencyStandard::where('assessor_id', Auth::user()->assessor->id)->get();
+        return view('assessor.examResult', $data);
+    }
+
+    public function examResultReport()
+    {
+        $data['active'] = 'examResultReport';
+        return view('assessor.examResultReport', $data);
     }
 }

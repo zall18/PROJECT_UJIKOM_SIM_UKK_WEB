@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->dateTime("exam_date");
             $table->foreignId("student_id")->constrained()->onDelete("cascade")->onUpdate("cascade");
             $table->foreignId("assessor_id")->constrained()->onDelete("cascade")->onUpdate("cascade");
+            $table->foreignId("standard_id")->constrained("competency_standards")->onDelete("cascadde")->onUpdate("cascade");
             $table->foreignId("element_id")->constrained("competency_elements")->onDelete("cascade")->onUpdate("cascade");
             $table->tinyInteger("status");
             $table->text("comments");
