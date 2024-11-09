@@ -76,4 +76,5 @@ Route::middleware('assessor.session')->group(function () {
     Route::get('/exam/result', [CompetencyElementController::class, 'examResult']);
     Route::get('/exam/result/report', [CompetencyElementController::class, 'examResultReport']);
     Route::get('/exam/result/{id}/student', [ExaminationController::class, 'result']);
+    Route::get('/exam/report/competency-standard/{id}', [ExaminationController::class,'report']);
 });

@@ -80,6 +80,7 @@ class CompetencyElementController extends Controller
     public function examResultReport()
     {
         $data['active'] = 'examResultReport';
+        $data['competencies'] = CompetencyStandard::where('assessor_id', Auth::user()->assessor->id)->get();
         return view('assessor.examResultReport', $data);
     }
 }
