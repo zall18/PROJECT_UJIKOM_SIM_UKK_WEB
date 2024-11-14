@@ -9,6 +9,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
+use RealRashid\SweetAlert\Toaster;
 
 class UserController extends Controller
 {
@@ -16,6 +18,9 @@ class UserController extends Controller
     {
         $data['users'] = User::all();
         $data['active'] = 'user';
+        $title = 'Delete Major!';
+        $text = "Are you sure you want to delete?";
+        confirmDelete($title, $text);
         return view('admin.userManage', $data);
     }
 
@@ -66,8 +71,10 @@ class UserController extends Controller
                     ]);
                 }
 
+                Alert::success('User Data', 'Success to create student');
+
                 return redirect('/user/managment');
-            }else if ($request->role == 'assessor') {
+            } else if ($request->role == 'assessor') {
                 $assessorValidate = $request->validate([
                     'assessor_type' => ['required'],
                     'description' => ['required']
@@ -90,9 +97,11 @@ class UserController extends Controller
                         'description' => $request->description
                     ]);
                 }
+                Alert::success('User Data', 'Success to create assessor');
+
 
                 return redirect('/user/managment');
-            }else{
+            } else {
                 User::create([
                     'full_name' => $request->full_name,
                     'username' => $request->username,
@@ -102,6 +111,8 @@ class UserController extends Controller
                     'role' => "admin",
                     'is_active' => 1
                 ]);
+                Alert::success('User Data', 'Success to create admin');
+
                 return redirect('/user/managment');
             }
         }
@@ -118,7 +129,8 @@ class UserController extends Controller
 
     }
 
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         $validate = $request->validate([
             'full_name' => ['required'],
             'username' => ['required'],
@@ -155,7 +167,7 @@ class UserController extends Controller
                 }
 
                 return redirect('/user/managment');
-            }else if ($request->role == 'assessor') {
+            } else if ($request->role == 'assessor') {
                 $assessorValidate = $request->validate([
                     'assessor_type' => ['required'],
                     'description' => ['required']
@@ -179,7 +191,7 @@ class UserController extends Controller
                 }
 
                 return redirect('/user/managment');
-            }else{
+            } else {
                 User::where('id', $request->id)->update([
                     'full_name' => $request->full_name,
                     'username' => $request->username,
@@ -194,12 +206,14 @@ class UserController extends Controller
         }
     }
 
-    public function delete(Request $request){
+    public function delete(Request $request)
+    {
         User::where('id', $request->id)->delete();
         return redirect('/user/managment');
     }
 
-    public function Admins(){
+    public function Admins()
+    {
         $data['admins'] = User::where('role', 'admin')->get();
         $data['active'] = 'admin';
         return view('admin.adminManage', $data);

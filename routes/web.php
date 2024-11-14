@@ -40,12 +40,12 @@ Route::middleware('admin.session')->group(function () {
     Route::post('/user/create', [UserController::class, 'create']);
     Route::get('/user/update/{id}', [UserController::class, 'updatePage']);
     Route::post('/user/update/{id}', [UserController::class, 'update']);
-    Route::get('/user/delete/{id}', [UserController::class, 'delete']);
+    Route::delete('/user/delete/{id}', [UserController::class, 'delete']);
     Route::get('/assessor/managment', [AssessorController::class, 'index']);
     Route::get('/major/managment', [MajorController::class, 'index']);
     Route::get('/major/create', [MajorController::class, 'createPage']);
     Route::get('/major/update/{id}', [MajorController::class, 'updatePage']);
-    Route::get('/major/delete/{id}', [MajorController::class, 'delete']);
+    Route::delete('/major/delete/{id}', [MajorController::class, 'delete']);
     Route::post('/major/create', [MajorController::class, 'create']);
     Route::post('/major/update', [MajorController::class, 'update']);
     Route::get('/student/managment', [StudentController::class, 'index']);
@@ -53,6 +53,8 @@ Route::middleware('admin.session')->group(function () {
     Route::get('/major/student', [MajorController::class, 'ms']);
     Route::get('/major/student/{id}', [MajorController::class, 'mstudent']);
     Route::get('/me', [UserController::class, 'userAdmin']);
+    Route::get('/exam-result', [CompetencyStandardController::class, 'cs_admin']);
+    Route::get('/exam-result/competency-standard/{id}', [ExaminationController::class, 'reportAdmin']);
 
 });
 
@@ -67,14 +69,14 @@ Route::middleware('assessor.session')->group(function () {
     Route::get('/competency-standard/competency-elements/{id}', [CompetencyElementController::class, 'index']);
     Route::post('/competency-standard/competency-elements', [CompetencyElementController::class, 'create']);
     Route::get('/competency-standard/detail/{id}', [CompetencyStandardController::class, 'detailPage']);
-    Route::get('/competency-standard/delete/{id}', [CompetencyStandardController::class, 'delete']);
+    Route::delete('/competency-standard/delete/{id}', [CompetencyStandardController::class, 'delete']);
     Route::get('/competency-standard/update/{id}', [CompetencyStandardController::class, 'updatePage']);
     Route::post('/competency-standard/update/{id}', [CompetencyStandardController::class, 'update']);
     Route::get('/competency-standard/competency-elements/update/{cid}/{id}', [CompetencyElementController::class, 'updatePage']);
     Route::post('/competency-standard/competency-elements/update/{cid}/{id}', [CompetencyElementController::class, 'update']);
-    Route::get('/competency-standard/competency-elements/delete/{cid}/{id}', [CompetencyElementController::class, 'delete']);
+    Route::delete('/competency-standard/competency-elements/delete/{cid}/{id}', [CompetencyElementController::class, 'delete']);
     Route::get('/exam/result', [CompetencyElementController::class, 'examResult']);
     Route::get('/exam/result/report', [CompetencyElementController::class, 'examResultReport']);
     Route::get('/exam/result/{id}/student', [ExaminationController::class, 'result']);
-    Route::get('/exam/report/competency-standard/{id}', [ExaminationController::class,'report']);
+    Route::get('/exam/report/competency-standard/{id}', [ExaminationController::class, 'report']);
 });

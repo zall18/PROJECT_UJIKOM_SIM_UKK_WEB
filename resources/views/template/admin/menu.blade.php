@@ -107,8 +107,7 @@
         </li>
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Examination</span></li>
         <li class="menu-item">
-            <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues" target="_blank"
-                class="menu-link">
+            <a href="/exam-result" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-support"></i>
                 <div data-i18n="Support">Exam history</div>
             </a>

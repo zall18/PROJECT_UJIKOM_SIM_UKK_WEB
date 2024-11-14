@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Major;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class MajorController extends Controller
 {
@@ -12,6 +13,9 @@ class MajorController extends Controller
     {
         $data['majors'] = Major::all();
         $data['active'] = 'major';
+        $title = 'Delete Major!';
+        $text = "Are you sure you want to delete?";
+        confirmDelete($title, $text);
         return view('admin.majorManage', $data);
     }
 
@@ -34,6 +38,8 @@ class MajorController extends Controller
                 'description' => $request->description
             ]);
 
+            alert::success('Major data', 'Success to create new major!');
+
             return redirect('/major/managment');
         } else {
             return back();
@@ -44,6 +50,7 @@ class MajorController extends Controller
     {
         $data['major'] = Major::find($request->id);
         $data['active'] = 'major';
+
         return view('admin.majorUpdate', $data);
     }
 
@@ -59,6 +66,9 @@ class MajorController extends Controller
                 'major_name' => $request->major_name,
                 'description' => $request->description
             ]);
+
+            alert::success('Major data', 'Success to update major!');
+
             return redirect('/major/managment');
         } else {
             return back();
@@ -67,6 +77,7 @@ class MajorController extends Controller
 
     public function delete(Request $request)
     {
+
         Major::where('id', $request->id)->delete();
         return redirect('major/managment');
     }

@@ -12,7 +12,7 @@
                     <p class="mb-4">
                         {{ $competency->unit_description }}
                     </p>
-                    <a href="/competency-standard/delete/{{ $competency->id }}" class="">
+                    <a href="/competency-standard/delete/{{ $competency->id }}" class="" data-confirm-delete="true">
                         <button type="submit" class="btn btn-danger w-100 mb-2">Delete Competecy Standard</button>
                     </a>
                     <a href="/competency-standard/update/{{ $competency->id }}">
@@ -53,8 +53,8 @@
                                                 class="bx bx-edit-alt me-1"></i>
                                             Edit</a>
                                         <a class="dropdown-item"
-                                            href="/competency-standard/competency-elements/delete/{{ $competency->id }}/{{ $item->id }}"><i
-                                                class="bx bx-trash me-1"></i>
+                                            href="/competency-standard/competency-elements/delete/{{ $competency->id }}/{{ $item->id }}"
+                                            data-confirm-delete="true"><i class="bx bx-trash me-1"></i>
                                             Delete</a>
                                     </div>
                                 </div>

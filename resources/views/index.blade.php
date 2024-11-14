@@ -57,6 +57,7 @@
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
+            @include('sweetalert::alert')
             @if (Auth::user()->role == 'admin')
                 @include('template.admin.menu')
             @else

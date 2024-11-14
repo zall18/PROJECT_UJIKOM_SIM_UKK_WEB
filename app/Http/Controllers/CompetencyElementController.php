@@ -6,6 +6,7 @@ use App\Models\CompetencyElement;
 use App\Models\CompetencyStandard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CompetencyElementController extends Controller
 {
@@ -32,6 +33,8 @@ class CompetencyElementController extends Controller
 
             }
         }
+
+        Alert::success('Competency', 'Success to create Competency Standard and Competency Elements');
 
         return redirect('/competency-standard/managment');
 
@@ -65,6 +68,8 @@ class CompetencyElementController extends Controller
     public function delete(Request $request)
     {
         CompetencyElement::where('id', $request->id)->delete();
+
+        Alert::success('Competency', 'Success to delete data!');
 
         return redirect('/competency-standard/detail/' . $request->cid);
 

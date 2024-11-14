@@ -1,28 +1,30 @@
 @extends('index')
 
 @section('container')
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tables /</span> Major Tables</h4>
+    <h4 class="fw-bold py-3 mb-4"> Exam Result Report</h4>
 
     <!-- Basic Bootstrap Table -->
     <div class="card">
-        <h5 class="card-header">Table Major</h5>
+        <h5 class="card-header">Table Competency Standard - Exam Result Report</h5>
         <div class="table-responsive text-nowrap">
             <table class="table">
                 <thead>
                     <tr>
                         <th>Id. </th>
-                        <th>Major Name</th>
-                        <th>Description</th>
+                        <th>Unit Code</th>
+                        <th>Unit Title</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    @foreach ($majors as $index => $item)
+                    @foreach ($competencies as $index => $item)
                         <tr>
                             <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{ $index + 1 }}</strong>
                             </td>
-                            <td>{{ $item->major_name }}</td>
-                            <td>{{ $item->description }}</td>
+                            <td>{{ $item->unit_code }}</td>
+                            <td>
+                                {{ $item->unit_title }}
+                            </td>
                             <td>
                                 <div class="dropdown">
                                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
@@ -30,12 +32,10 @@
                                         <i class="bx bx-dots-vertical-rounded"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="/major/update/{{ $item->id }}"><i
-                                                class="bx bx-edit-alt me-1"></i>
-                                            Edit</a>
-                                        <a class="dropdown-item" href="/major/delete/{{ $item->id }}"
-                                            data-confirm-delete="true"><i class="bx bx-trash me-1"></i>
-                                            Delete</a>
+                                        <a class="dropdown-item"
+                                            href="/exam-resutl/competency-standard/{{ $item->id }}"><i
+                                                class='bx bx-search-alt-2'></i>
+                                            See Exam Report</a>
                                     </div>
                                 </div>
                             </td>
@@ -49,6 +49,6 @@
     <!--/ Basic Bootstrap Table -->
 
     <div class="buy-now">
-        <a href="/major/create" class="btn btn-danger btn-buy-now">Create Major Data</a>
+        <a href="/competency-standard/create" class="btn btn-danger btn-buy-now">Create Competenncy Standard</a>
     </div>
 @endsection
