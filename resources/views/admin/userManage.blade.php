@@ -41,7 +41,7 @@
                                         <a class="dropdown-item" href="/user/update/{{ $item->id }}"><i
                                                 class="bx bx-edit-alt me-1"></i>
                                             Edit</a>
-                                        <a class="dropdown-item" href="/user/delete/{{ $item->id }}"><i class="bx bx-trash me-1"></i>
+                                        <a class="dropdown-item" href="/user/delete/{{ $item->id }}" data-confirm-delete="true"><i class="bx bx-trash me-1"></i>
                                             Delete</a>
                                     </div>
                                 </div>

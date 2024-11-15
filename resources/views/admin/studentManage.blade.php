@@ -37,10 +37,10 @@
                                         <i class="bx bx-dots-vertical-rounded"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="/user/update/{{ $item->id }}"><i
+                                        <a class="dropdown-item" href="/user/update/{{ $item->user_id }}"><i
                                                 class="bx bx-edit-alt me-1"></i>
                                             Edit</a>
-                                        <a class="dropdown-item" href="/user/delete/{{ $item->id }}"><i class="bx bx-trash me-1"></i>
+                                        <a class="dropdown-item" href="/user/delete/{{ $item->user_id }}"><i class="bx bx-trash me-1"></i>
                                             Delete</a>
                                     </div>
                                 </div>
