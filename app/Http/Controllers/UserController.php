@@ -31,6 +31,7 @@ class UserController extends Controller
         return view('admin.userCreate', $data);
     }
 
+    //Create user include the role
     public function create(Request $request)
     {
 
@@ -129,6 +130,7 @@ class UserController extends Controller
 
     }
 
+    //Update user include the role
     public function update(Request $request)
     {
         $validate = $request->validate([
@@ -165,6 +167,7 @@ class UserController extends Controller
                         'major_id' => $request->major_id,
                     ]);
                 }
+
 
                 return redirect('/user/managment');
             } else if ($request->role == 'assessor') {
@@ -206,12 +209,14 @@ class UserController extends Controller
         }
     }
 
+    //Delete user
     public function delete(Request $request)
     {
         User::where('id', $request->id)->delete();
         return redirect('/user/managment');
     }
 
+    //Show user role admin
     public function Admins()
     {
         $data['admins'] = User::where('role', 'admin')->get();
@@ -219,10 +224,45 @@ class UserController extends Controller
         return view('admin.adminManage', $data);
     }
 
+    //Show profile admin
     public function userAdmin()
     {
         $data['user'] = Auth::user();
         $data['active'] = 'dashboard';
         return view('admin.adminProfile', $data);
+    }
+
+    //Show profile assessor
+    public function userAssessor()
+    {
+        $data['user'] = Auth::user();
+        $data['active'] = 'dashboard';
+        return view('assessor.assessorProfile', $data);
+    }
+
+    //Update profile assessor
+    public function assessorProfileUpdate(Request $request)
+    {
+        $validate = $request->validate([
+            'full_name' => ['required'],
+            'username' => ['required'],
+            'email' => ['required', 'email'],
+            'phone' => ['required'],
+            'role' => ['required']
+        ]);
+
+        if ($validate) {
+            User::where('id', Auth::user()->id)->update([
+                'full_name' => $request->full_name,
+                'username' => $request->username,
+                'email' => $request->email,
+                'password' => $request->password != null ? bcrypt($request->password) : DB::raw('password'),
+                'phone' => $request->phone,
+                'role' => $request->role,
+                'is_active' => 1
+            ]);
+
+            return redirect('/assessor/me');
+        }
     }
 }

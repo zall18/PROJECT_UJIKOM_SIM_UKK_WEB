@@ -17,6 +17,7 @@ class CompetencyElementController extends Controller
         return view("assessor.elementCreate", $data);
     }
 
+    // Create Competency Elements
     public function create(Request $request)
     {
         // dd($request->all());
@@ -40,6 +41,7 @@ class CompetencyElementController extends Controller
 
     }
 
+    
     public function updatePage(Request $request)
     {
         $data['criteria'] = CompetencyElement::where('id', $request->id)->first();
@@ -48,6 +50,7 @@ class CompetencyElementController extends Controller
         return view('assessor.elemenetUpdate', $data);
     }
 
+    //Update competency standard
     public function update(Request $request)
     {
         $validate = $request->validate([
@@ -65,6 +68,7 @@ class CompetencyElementController extends Controller
         }
     }
 
+    //Delete competency standard
     public function delete(Request $request)
     {
         CompetencyElement::where('id', $request->id)->delete();
@@ -75,6 +79,7 @@ class CompetencyElementController extends Controller
 
     }
 
+    //Show all competency standard from assessor that made the competency standard
     public function examResult()
     {
         $data['active'] = 'examResult';
@@ -82,6 +87,7 @@ class CompetencyElementController extends Controller
         return view('assessor.examResult', $data);
     }
 
+    //Show all competency standard from assessor that made the competency standard
     public function examResultReport()
     {
         $data['active'] = 'examResultReport';

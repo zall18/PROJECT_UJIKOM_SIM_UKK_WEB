@@ -45,6 +45,7 @@
 
     <!-- Page CSS -->
 
+
     <!-- Helpers -->
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
 
@@ -141,7 +142,26 @@
 
     <!-- Page JS -->
     <script src="{{ asset('assets/js/dashboards-analytics.js') }}"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="{{ asset('datatables/datatables.css') }}">
+    <link rel="stylesheet" href="{{ asset('datatables/datatables.min.css') }}">
+    <script src="{{ asset('datatables/datatables.js') }}"></script>
+    <script src="{{ asset('datatables/datatables.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            // Initialize DataTable
+            $('#manage-table').DataTable({
+                "paging": true,         // Enable pagination
+                "searching": true,      // Enable search
+                "ordering": true,       // Enable column ordering
+                "info": true,           // Show info text
+                "lengthChange": true,  // Disable changing page length
+                "autoWidth": false,     // Disable auto-width of columns
+                "responsive": true      // Make the table responsive
+            });
+        });
+    </script>
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>

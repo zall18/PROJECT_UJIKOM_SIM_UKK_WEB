@@ -33,7 +33,7 @@
                                     </button>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item"
-                                            href="/exam-resutl/competency-standard/{{ $item->id }}"><i
+                                            href="/exam-result/competency-standard/{{ $item->id }}"><i
                                                 class='bx bx-search-alt-2'></i>
                                             See Exam Report</a>
                                     </div>

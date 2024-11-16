@@ -43,7 +43,7 @@
                                 </div>
                             </div>
                             <span class="fw-semibold d-block mb-1">Competeny Standart</span>
-                            <h3 class="card-title mb-2">0</h3>
+                            <h3 class="card-title mb-2">{{ $competency_count }}</h3>
                         </div>
                     </div>
                 </div>
@@ -59,14 +59,10 @@
                                         aria-haspopup="true" aria-expanded="false">
                                         <i class="bx bx-dots-vertical-rounded"></i>
                                     </button>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt6">
-                                        <a class="dropdown-item" href="javascript:void(0);">Manage Students</a>
-
-                                    </div>
                                 </div>
                             </div>
                             <span>Students</span>
-                            <h3 class="card-title text-nowrap mb-1">0</h3>
+                            <h3 class="card-title text-nowrap mb-1">{{ $student_count }}</h3>
                         </div>
                     </div>
                 </div>

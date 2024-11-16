@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    //Login
     public function login(Request $request)
     {
 
@@ -35,6 +36,7 @@ class AuthController extends Controller
 
     }
 
+    //Logout
     public function logout()
     {
         Auth::logout();

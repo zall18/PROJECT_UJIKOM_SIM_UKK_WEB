@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class AssessorController extends Controller
 {
+    //Show all Assessor
     public function index()
     {
         $data['assessors'] = Assessor::all();

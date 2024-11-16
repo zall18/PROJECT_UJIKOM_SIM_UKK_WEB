@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 class ExaminationController extends Controller
 {
+
+    //Show exam result from competency's assessor
     public function result(Request $request)
     {
         $standard = CompetencyStandard::where('assessor_id', Auth::user()->assessor->id)->withCount('competency_elements')->first();
@@ -43,6 +45,7 @@ class ExaminationController extends Controller
 
     }
 
+    //Show exam result report from competency's assessor
     public function report(Request $request)
     {
         $data['elements'] = CompetencyElement::where('competency_standard_id', $request->id)->get();
@@ -76,12 +79,14 @@ class ExaminationController extends Controller
         // dd($data['students']);
         return view('assessor.examResultReportStudent', $data);
     }
+
+    //show all exam result
     public function reportAdmin(Request $request)
     {
         $data['elements'] = CompetencyElement::where('competency_standard_id', $request->id)->get();
         $data['standard'] = CompetencyStandard::where('id', $request->id)->first();
         $data['active'] = 'examResultReport';
-        $standard = CompetencyStandard::where('assessor_id', Auth::user()->assessor->id)->withCount('competency_elements')->first();
+        $standard = CompetencyStandard::withCount('competency_elements')->first();
         // Mendapatkan data ujian murid berdasarkan standard yang dipilih
         $examinations = Examination::where('standard_id', $request->id)->get();
         $data['students'] = $examinations->groupBy('student_id')->map(function ($exams) use ($standard) {

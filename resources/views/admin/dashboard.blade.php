@@ -43,7 +43,7 @@
                                 </div>
                             </div>
                             <span class="fw-semibold d-block mb-1">Users</span>
-                            <h3 class="card-title mb-2">0</h3>
+                            <h3 class="card-title mb-2">{{ $user_count }}</h3>
                         </div>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                                 </div>
                             </div>
                             <span>Students</span>
-                            <h3 class="card-title text-nowrap mb-1">0</h3>
+                            <h3 class="card-title text-nowrap mb-1">{{ $student_count }}</h3>
                         </div>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
                                 </div>
                             </div>
                             <span class="fw-semibold d-block mb-1">Assessor</span>
-                            <h3 class="card-title mb-2">0</h3>
+                            <h3 class="card-title mb-2">{{ $assessor_count }}</h3>
 
                         </div>
                     </div>
@@ -107,7 +107,7 @@
 
                             </div>
                             <span>Admin</span>
-                            <h3 class="card-title text-nowrap mb-1">0</h3>
+                            <h3 class="card-title text-nowrap mb-1">{{ $admin_count }}</h3>
                         </div>
                     </div>
                 </div>

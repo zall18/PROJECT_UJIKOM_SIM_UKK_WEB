@@ -7,7 +7,7 @@
     <div class="card">
         <h5 class="card-header">Table User</h5>
         <div class="table-responsive text-nowrap">
-            <table class="table">
+            <table class="table" id="manage-table">
                 <thead>
                     <tr>
                         <th>Id. </th>
@@ -58,4 +58,7 @@
     <div class="buy-now">
         <a href="/user/create" class="btn btn-danger btn-buy-now">Create User Data</a>
     </div>
+
 @endsection
+
+

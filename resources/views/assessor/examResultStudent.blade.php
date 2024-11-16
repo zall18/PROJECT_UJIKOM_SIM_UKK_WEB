@@ -26,7 +26,7 @@
     <div class="card mt-3">
         <h5 class="card-header">Table Exam Result</h5>
         <div class="table-responsive text-nowrap">
-            <table class="table">
+            <table class="table" id="manage-table">
                 <thead>
                     <tr>
                         <th>Id. </th>

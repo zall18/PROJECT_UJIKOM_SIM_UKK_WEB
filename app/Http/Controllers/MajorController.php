@@ -25,6 +25,7 @@ class MajorController extends Controller
         return view('admin.majorCreate', $data);
     }
 
+    //Create major
     public function create(Request $request)
     {
         $validation = $request->validate([
@@ -46,6 +47,7 @@ class MajorController extends Controller
         }
     }
 
+    //Update major
     public function updatePage(Request $request)
     {
         $data['major'] = Major::find($request->id);
@@ -75,6 +77,7 @@ class MajorController extends Controller
         }
     }
 
+    //Delete major
     public function delete(Request $request)
     {
 
@@ -88,6 +91,8 @@ class MajorController extends Controller
         $data['active'] = 'ms';
         return view('admin.majorStudent', $data);
     }
+
+    //Show all student from the major
     public function mstudent(Request $request)
     {
         $data['students'] = Student::where('major_id', $request->id)->get();
