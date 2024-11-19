@@ -76,17 +76,24 @@
             </a>
         </li>
 
+        <li class="menu-header small text-uppercase"><span class="menu-header-text">Assesment</span></li>
+
+        <li class="menu-item {{ $active == 'assessment' ? 'active' : '' }}">
+            <a href="/assesment" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-table"></i>
+                <div data-i18n="Tables">Assessment</div>
+            </a>
+        </li>
+
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Examination</span></li>
         <li class="menu-item {{ $active == 'examResult' ? 'active' : '' }}">
-            <a href="/exam/result"
-                class="menu-link">
+            <a href="/exam/result" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-support"></i>
                 <div data-i18n="Support">Exam Results</div>
             </a>
         </li>
         <li class="menu-item {{ $active == 'examResultReport' ? 'active' : '' }}">
-            <a href="/exam/result/report"
-                class="menu-link">
+            <a href="/exam/result/report" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-support"></i>
                 <div data-i18n="Support">Exam Result Report </div>
             </a>

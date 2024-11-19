@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CompetencyElement;
 use App\Models\CompetencyStandard;
 use App\Models\Examination;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -113,5 +114,33 @@ class ExaminationController extends Controller
 
         // dd($data['students']);
         return view('admin.examReportDetail', $data);
+    }
+
+    public function assessmenShow()
+    {
+        $user = Auth::user();
+        $data['competencies'] = CompetencyStandard::where('assessor_id', $user->assessor->id)->get();
+        $data['active'] = 'assessment';
+        return view('assessor.assessment', $data);
+    }
+
+    public function assessmentStudent(Request $request)
+    {
+        $standard = CompetencyStandard::where('id', $request->id)->first();
+        $data['standard'] = $standard;
+        $data['students'] = Student::where('major_id', $standard->major_id)->get();
+        $data['active'] = 'student';
+        return view('assessor.assessmentStudent', $data);
+    }
+
+    public function assessmentStudentExam(Request $request)
+    {
+        $standard = CompetencyStandard::where('id', $request->standard_id)->first();
+        $data['standard'] = $standard;
+        $data['student'] = Student::where('id', $request->id)->first();
+        $data['elements'] = CompetencyElement::where('competency_standard_id', $request->standard_id)->get();
+        $data['examinations'] = Examination::where('standard_id', $request->standard_id)->where('student_id', $request->id)->get();
+        $data['active'] = 'student';
+        return view('assessor.assessmentStudent', $data);
     }
 }

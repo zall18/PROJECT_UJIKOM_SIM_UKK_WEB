@@ -118,6 +118,12 @@ Route::middleware('assessor.session')->group(function () {
 
     //Assessor Profile Route
     Route::get('/assessor/me', [UserController::class, 'userAssessor']);
-    Route::post('/assessor/me', [UserController::class,'assessorProfileUpdate']);
+    Route::post('/assessor/me', [UserController::class, 'assessorProfileUpdate']);
+
+    //Assessment Route
+    Route::get('/assesment', [ExaminationController::class, 'assessmenShow']);
+    Route::get('/assesment/competency-standard/{id}', [ExaminationController::class, 'assessmentStudent']);
+    Route::get('/assesment/competency-standard/{standard_id}/student/{id}', [ExaminationController::class, 'assessmentStudentExam']);
+
 });
 

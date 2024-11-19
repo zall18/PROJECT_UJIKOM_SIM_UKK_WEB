@@ -14,7 +14,8 @@ class CompetencyStandardController extends Controller
 {
     public function index()
     {
-        $data['competencies'] = CompetencyStandard::all();
+        $user = Auth::user();
+        $data['competencies'] = CompetencyStandard::where('assessor_id', $user->assessor->id)->get();
         $data['active'] = 'competency';
         return view('assessor.competencyManage', $data);
     }
