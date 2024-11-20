@@ -53,9 +53,9 @@
         </div>
     </div>
     <!--/ Basic Bootstrap Table -->
-{{--
+
     <div class="buy-now">
-        <a href="/user/create" class="btn btn-danger btn-buy-now">Create User Data</a>
-    </div> --}}
+        <a href="/student/create/import" class="btn btn-danger btn-buy-now">Export from excel</a>
+    </div>
 
 @endsection

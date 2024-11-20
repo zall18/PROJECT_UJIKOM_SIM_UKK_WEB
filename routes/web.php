@@ -69,6 +69,8 @@ Route::middleware('admin.session')->group(function () {
 
     //Student Managment Route
     Route::get('/student/managment', [StudentController::class, 'index']);
+    Route::get('/student/create/import', [StudentController::class, 'studentImport']);
+    Route::post('/student/create/excel', [StudentController::class, 'import']);
 
     //Admin Managment Route
     Route::get('/admin/managment', [UserController::class, 'Admins']);
@@ -124,6 +126,6 @@ Route::middleware('assessor.session')->group(function () {
     Route::get('/assesment', [ExaminationController::class, 'assessmenShow']);
     Route::get('/assesment/competency-standard/{id}', [ExaminationController::class, 'assessmentStudent']);
     Route::get('/assesment/competency-standard/{standard_id}/student/{id}', [ExaminationController::class, 'assessmentStudentExam']);
-
+    Route::post('/assessment/grading/{id}', [ExaminationController::class, 'grading']);
 });
 

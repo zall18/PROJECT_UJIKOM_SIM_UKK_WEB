@@ -1,6 +1,6 @@
 @extends('index')
 @section('container')
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Assesment / {{ $standard->unit_title }} / </span> Student
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><a href="/assesment">Assesment</a> / {{ $standard->unit_title }} / </span> Student
         Tables</h4>
 
     <!-- Basic Bootstrap Table -->

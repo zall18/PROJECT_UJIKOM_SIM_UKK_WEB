@@ -15,31 +15,38 @@ class ExaminationController extends Controller
     //Show exam result from competency's assessor
     public function result(Request $request)
     {
-        $standard = CompetencyStandard::where('assessor_id', Auth::user()->assessor->id)->withCount('competency_elements')->first();
+        $standard = CompetencyStandard::where('id', $request->id)->withCount('competency_elements')->first();
         // Mendapatkan data ujian murid berdasarkan standard yang dipilih
         $examinations = Examination::where('standard_id', $request->id)->get();
         $active = 'examResult';
 
         // Mendapatkan daftar murid yang mengikuti ujian pada standar kompetensi ini
         $students = $examinations->groupBy('student_id')->map(function ($exams) use ($standard) {
-            $totalElements = $standard->competency_elements_count;
-            $completedElements = $exams->where('status', 1)->count(); // Menghitung elemen yang statusnya kompeten
+            // Pastikan total elemen dihitung langsung dari data relasi
+            $totalElements = $standard->competency_elements->count();
+
+            // Hitung elemen kompeten secara unik berdasarkan element_id
+            $completedElements = $exams->where('status', 1)->unique('element_id')->count();
 
             // Menghitung nilai akhir dalam bentuk persentase
-            $finalScore = round(($completedElements / $totalElements) * 100);
+            $finalScore = $totalElements > 0 ? round(($completedElements / $totalElements) * 100) : 0;
 
-            // Menentukan status kompeten atau tidak kompeten berdasarkan persentase (misalnya kompeten jika >= 75%)
-            $status = $finalScore >= 75 ? 'Competent' : 'Not Compotent';
-
-            // dd($status);
+            // Menentukan status kompeten atau tidak kompeten
+            $status = $finalScore >= 75 ? 'Competent' : 'Not Competent';
+            // dd([
+            //     'total_elements' => $totalElements,
+            //     'completed_elements' => $completedElements,
+            //     'exams' => $exams->toArray(),
+            // ]);
 
             return [
-                'student_id' => $exams->first()->id,
+                'student_id' => $exams->first()->student_id,
                 'student_name' => $exams->first()->student->user->full_name,
                 'final_score' => $finalScore,
-                'status' => $status
+                'status' => $status,
             ];
         });
+
 
         // Kirim data ke tampilan
         return view('assessor.examResultStudent', compact('standard', 'students', 'active'));
@@ -52,7 +59,7 @@ class ExaminationController extends Controller
         $data['elements'] = CompetencyElement::where('competency_standard_id', $request->id)->get();
         $data['standard'] = CompetencyStandard::where('id', $request->id)->first();
         $data['active'] = 'examResultReport';
-        $standard = CompetencyStandard::where('assessor_id', Auth::user()->assessor->id)->withCount('competency_elements')->first();
+        $standard = CompetencyStandard::where('id', $request->id)->withCount('competency_elements')->first();
         // Mendapatkan data ujian murid berdasarkan standard yang dipilih
         $examinations = Examination::where('standard_id', $request->id)->get();
         $data['students'] = $examinations->groupBy('student_id')->map(function ($exams) use ($standard) {
@@ -141,6 +148,40 @@ class ExaminationController extends Controller
         $data['elements'] = CompetencyElement::where('competency_standard_id', $request->standard_id)->get();
         $data['examinations'] = Examination::where('standard_id', $request->standard_id)->where('student_id', $request->id)->get();
         $data['active'] = 'student';
-        return view('assessor.assessmentStudent', $data);
+        return view('assessor.assesmentStudentExam', $data);
+    }
+
+    public function grading(Request $request) {
+        // dd($request->status);
+
+        $elements = $request->elements;
+
+        foreach ($elements as $key => $value) {
+            // dd($request->id);
+            // dd([$request->status0, $request->status1]);
+            $statusKey = 'status' . $key; // Membuat nama input seperti 'status0', 'status1'
+            $status = $request->input($statusKey);
+            if ($request->status.$key != null) {
+                $exam = Examination::where('student_id', $request->id)->where('element_id', $value)->first();
+                // dd($exam);
+                if ($exam != null) {
+                    Examination::where('student_id', $request->id)->where('element_id', $value)->update([
+                        'status' => $status,
+                    ]);
+                }else{
+                    // dd($exam);
+                    Examination::create([
+                        'exam_date' => now(),
+                        'student_id' => $request->id,
+                        'assessor_id' => Auth::user()->assessor->id,
+                        'standard_id' => $request->standard_id,
+                        'element_id' => $value,
+                        'status' => $status,
+                        'comments' => '-'
+                    ]);
+                }
+            }
+        }
+        return back();
     }
 }
