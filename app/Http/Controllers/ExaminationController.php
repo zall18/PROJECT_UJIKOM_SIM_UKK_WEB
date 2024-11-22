@@ -12,32 +12,34 @@ use Illuminate\Support\Facades\Auth;
 class ExaminationController extends Controller
 {
 
-    //Show exam result from competency's assessor
     public function result(Request $request)
     {
-        $standard = CompetencyStandard::where('id', $request->id)->withCount('competency_elements')->first();
-        // Mendapatkan data ujian murid berdasarkan standard yang dipilih
-        $examinations = Examination::where('standard_id', $request->id)->get();
-        $active = 'examResult';
+        $id = Auth::user()->assessor->id; // Pastikan relasi 'assessor' didefinisikan di model User
+        // Ambil daftar semua standar kompetensi terkait assessor
+        $standars = CompetencyStandard::with('major') // Pastikan relasi 'major' ada di model CompetencyStandar
+            ->where('assessor_id', $id)
+            ->get();
 
-        // Mendapatkan daftar murid yang mengikuti ujian pada standar kompetensi ini
+        // Ambil standar_id dari request, atau gunakan default 1 jika kosong
+        $standar_id = $request->input('standar_id', 1); // Default ke 1 jika tidak ada input
+
+        // Validasi standar ID
+        $standard = CompetencyStandard::where('id', $standar_id)->with('competency_elements')->first();
+
+        if (!$standard) {
+            return back()->with('error', 'Standar kompetensi tidak ditemukan.');
+        }
+
+        // Mendapatkan data ujian berdasarkan standar yang dipilih
+        $examinations = Examination::where('standard_id', $standar_id)->with('student.user')->get();
+
+        // Kelompokkan berdasarkan student_id
         $students = $examinations->groupBy('student_id')->map(function ($exams) use ($standard) {
-            // Pastikan total elemen dihitung langsung dari data relasi
             $totalElements = $standard->competency_elements->count();
-
-            // Hitung elemen kompeten secara unik berdasarkan element_id
             $completedElements = $exams->where('status', 1)->unique('element_id')->count();
 
-            // Menghitung nilai akhir dalam bentuk persentase
             $finalScore = $totalElements > 0 ? round(($completedElements / $totalElements) * 100) : 0;
-
-            // Menentukan status kompeten atau tidak kompeten
-            $status = $finalScore >= 75 ? 'Competent' : 'Not Competent';
-            // dd([
-            //     'total_elements' => $totalElements,
-            //     'completed_elements' => $completedElements,
-            //     'exams' => $exams->toArray(),
-            // ]);
+            $status = $finalScore >= 90 ? 'Competent' : 'Not Competent';
 
             return [
                 'student_id' => $exams->first()->student_id,
@@ -47,10 +49,36 @@ class ExaminationController extends Controller
             ];
         });
 
+        $active = 'result';
 
-        // Kirim data ke tampilan
-        return view('assessor.examResultStudent', compact('standard', 'students', 'active'));
+        // Debug untuk melihat hasil
+        // dd($students);
 
+        // Mengirim data ke view
+        return view('assessor.examResultStudent', compact('standard', 'students', 'standars', 'active'));
+    }
+
+    public function fetchExamResult($standardId)
+    {
+        $standard = CompetencyStandard::withCount('competency_elements')->findOrFail($standardId);
+        $examinations = Examination::where('standard_id', $standardId)->get();
+
+        $students = $examinations->groupBy('student_id')->map(function ($exams) use ($standard) {
+            $totalElements = $standard->competency_elements_count;
+            $completedElements = $exams->where('status', 1)->count();
+
+            $finalScore = $totalElements > 0 ? round(($completedElements / $totalElements) * 100) : 0;
+            $status = $finalScore >= 75 ? 'Competent' : 'Not Competent';
+
+            return [
+                'student_id' => $exams->first()->student_id,
+                'student_name' => $exams->first()->student->user->full_name,
+                'final_score' => $finalScore,
+                'status' => $status,
+            ];
+        })->values();
+
+        return response()->json(['students' => $students]);
     }
 
     //Show exam result report from competency's assessor
@@ -94,7 +122,7 @@ class ExaminationController extends Controller
         $data['elements'] = CompetencyElement::where('competency_standard_id', $request->id)->get();
         $data['standard'] = CompetencyStandard::where('id', $request->id)->first();
         $data['active'] = 'examResultReport';
-        $standard = CompetencyStandard::withCount('competency_elements')->first();
+        $standard = CompetencyStandard::where('id', $request->id)->withCount('competency_elements')->first();
         // Mendapatkan data ujian murid berdasarkan standard yang dipilih
         $examinations = Examination::where('standard_id', $request->id)->get();
         $data['students'] = $examinations->groupBy('student_id')->map(function ($exams) use ($standard) {

@@ -12,6 +12,22 @@
                     <p class="mb-4">
                         {{ $standard->unit_description }}
                     </p>
+                    {{-- <form action="/select/exam/result/student" method="GET" id="form-standar">
+                        <select name="standar_id" id="standar-select" class="form-select w-100" onchange="submitForm()">
+                            @foreach ($standars as $item)
+                                <option value="{{ $item->id }}" {{ request('standar_id') == $item->id ? 'selected' : '' }}>
+                                    {{ $item->unit_code }}, {{ $item->unit_title }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </form> --}}
+                    <select id="roleSelect" class="form-select" name="role" onchange="fetchExamResult(this.value)">
+                        @foreach ($standars as $item)
+                            <option value="{{ $item->id }}">{{ $item->unit_title }}</option>
+                        @endforeach
+                    </select>
+
+
                     {{-- <a href="/competency-standard/delete/{{ $competency->id }}" class="">
                         <button type="submit" class="btn btn-danger w-100 mb-2">Delete Competecy Standard</button>
                     </a>
@@ -53,4 +69,37 @@
             </table>
         </div>
     </div>
+
+    {{-- <script>
+        function submitForm() {
+        const form = document.getElementById('form-standar');
+        form.submit();
+        }
+    </script> --}}
+    <script>
+        function fetchExamResult(standardId) {
+            fetch(`/exam-result/${standardId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector('#manage-table tbody');
+                    tableBody.innerHTML = ''; // Hapus isi tabel sebelumnya
+
+                    // Perbarui isi tabel dengan data yang diterima
+                    data.students.forEach((student, index) => {
+                        tableBody.innerHTML += `
+                            <tr>
+                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${index + 1}</strong></td>
+                                <td>${student.student_name}</td>
+                                <td>${parseFloat(student.final_score).toFixed(2)}%</td>
+                                <td>${student.status}</td>
+                            </tr>
+                        `;
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching exam results:', error);
+                });
+        }
+    </script>
+
 @endsection

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CompetencyStandard;
 use App\Models\Major;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -80,6 +81,15 @@ class MajorController extends Controller
     //Delete major
     public function delete(Request $request)
     {
+
+        $stundent = Student::where('major_id', $request->id)->get()->count();
+        $standard = CompetencyStandard::where('major_id', $request->id)->get()->count();
+
+        if($stundent != 0 && $standard != 0)
+        {
+            Alert::error('Failed to delete', 'There is still student and competency standard that connect with this major');
+            return;
+        }
 
         Major::where('id', $request->id)->delete();
         return redirect('major/managment');
