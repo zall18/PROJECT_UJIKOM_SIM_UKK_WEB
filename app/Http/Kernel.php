@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\AdminSession;
 use App\Http\Middleware\AssessorSession;
+use App\Http\Middleware\StudentAssessor;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -67,5 +68,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'admin.session' => AdminSession::class,
         'assessor.session' => AssessorSession::class,
+        'student.session' => StudentAssessor::class,
     ];
 }

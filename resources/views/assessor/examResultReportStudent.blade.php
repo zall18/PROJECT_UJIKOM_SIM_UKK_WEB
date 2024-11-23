@@ -18,6 +18,14 @@
                     <a href="/competency-standard/update/{{ $competency->id }}">
                         <button type="submit" class="btn btn-primary w-100">Update Competecy Standard</button>
                     </a> --}}
+                    <select id="roleSelect" class="form-select" name="role" onchange="fetchExamResultReport(this.value)">
+                        @foreach ($standards as $item)
+                            <option value="{{ $item->id }}" {{ $standard->id == $item->id ? 'selected' : '' }}>
+                                {{ $item->unit_title }}
+                            </option>
+                        @endforeach
+                    </select>
+
                 </div>
             </div>
         </div>
@@ -26,7 +34,7 @@
     <div class="card mt-3">
         <h5 class="card-header">Table Exam Result</h5>
         <div class="table-responsive text-nowrap">
-            <table class="table"  id="manage-table">
+            <table class="table"  id="report-table">
                 <thead>
                     <tr>
                         <th>Id. </th>
@@ -58,4 +66,67 @@
             </table>
         </div>
     </div>
+
+    <script>
+        function fetchExamResultReport(standardId) {
+            // Kirim request menggunakan Fetch API untuk mengganti data tanpa refresh halaman
+            fetch(`/exam-results/report/${standardId}`, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Fetched data:', data);
+                const tableHeader = document.querySelector('#report-table thead');
+                tableHeader.innerHTML = ''; // Bersihkan isi thead terlebih dahulu
+                let elementArray = Object.values(data.elements)
+                // Buat baris header awal
+                let headerRow = `
+                    <tr>
+                        <th>#</th>
+                        <th>Student Full Name</th>
+                `;
+
+                // Iterasi array `element` untuk menambahkan kolom kriteria
+                elementArray.forEach(element => {
+                    headerRow += `<th>${element.criteria}</th>`;
+                });
+
+                // Tambahkan kolom untuk skor akhir dan status kompetensi
+                headerRow += `
+                        <th>Final Score (%)</th>
+                        <th>Competency Status</th>
+                    </tr>
+                `;
+
+                // Set isi <thead> dengan baris header yang telah dibuat
+                tableHeader.innerHTML = headerRow;
+                // Replace table content dynamically
+                const studentsArray = Object.values(data.students);
+                console.log(studentsArray);
+
+                const tableBody = document.querySelector('#report-table tbody');
+                tableBody.innerHTML = '';
+
+                studentsArray.forEach((student, index) => {
+                    let row = `<tr>
+                        <td>${index + 1}</td>
+                        <td>${student.student_name}</td>`;
+
+                    student.elements.forEach(element => {
+                        row += `<td>${element.status}</td>`;
+                    });
+
+                    row += `
+                        <td>${student.final_score.toFixed(2)}%</td>
+                        <td>${student.status}</td>
+                    </tr>`;
+                    tableBody.innerHTML += row;
+                });
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
 @endsection

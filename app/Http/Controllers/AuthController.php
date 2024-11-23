@@ -28,8 +28,13 @@ class AuthController extends Controller
                     return redirect('/admin/dashboard');
                 }else if($role == 'assessor'){
                     return redirect('/assessor/dashboard');
+                }else if($role == 'student'){
+                    return redirect('/student/dashboard');
                 }
 
+            }else{
+                toast('Failed to login', 'error');
+                return redirect('/');
             }
 
         }

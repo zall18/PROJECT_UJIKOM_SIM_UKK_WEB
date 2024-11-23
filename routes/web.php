@@ -117,7 +117,7 @@ Route::middleware('assessor.session')->group(function () {
     Route::get('/exam/result/report', [CompetencyElementController::class, 'examResultReport']);
     Route::get('/exam/result/{id}/student', [ExaminationController::class, 'result']);
     Route::get('/exam-result/{standard}', [ExaminationController::class, 'fetchExamResult']);
-    
+    Route::get('/exam-results/report/{standardId}', [ExaminationController::class, 'fetchReport']);
     Route::get('/exam/report/competency-standard/{id}', [ExaminationController::class, 'report']);
 
     //Assessor Profile Route
@@ -128,6 +128,14 @@ Route::middleware('assessor.session')->group(function () {
     Route::get('/assesment', [ExaminationController::class, 'assessmenShow']);
     Route::get('/assesment/competency-standard/{id}', [ExaminationController::class, 'assessmentStudent']);
     Route::get('/assesment/competency-standard/{standard_id}/student/{id}', [ExaminationController::class, 'assessmentStudentExam']);
+    Route::get('/assesment/fetch/competency-standard/{standard_id}/student/{id}', [ExaminationController::class, 'fetchassessmentStudentExam']);
     Route::post('/assessment/grading/{id}', [ExaminationController::class, 'grading']);
+});
+
+Route::middleware('student.session')->group(function () {
+    Route::get('/student/dashboard', [StudentController::class, 'dashboard']);
+
+    Route::get('/student/exam-result', [ExaminationController::class, 'resultStudent']);
+    Route::get('/student/profile', [StudentController::class, 'studentProfile']);
 });
 

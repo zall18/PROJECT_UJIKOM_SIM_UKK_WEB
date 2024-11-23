@@ -61,16 +61,20 @@
             @include('sweetalert::alert')
             @if (Auth::user()->role == 'admin')
                 @include('template.admin.menu')
-            @else
+            @elseif (Auth::user()->role == 'assessor')
                 @include('template.assessor.menu')
+            @elseif (Auth::user()->role == 'student')
+                @include('template.student.menu')
             @endif
 
             <!-- Layout container -->
             <div class="layout-page">
                 @if (Auth::user()->role == 'admin')
                     @include('template.admin.navbar')
-                @else
+                @elseif (Auth::user()->role == 'assessor')
                     @include('template.assessor.navbar')
+                @elseif (Auth::user()->role == 'student')
+                    @include('template.student.navbar')
                 @endif
 
                 <!-- Content wrapper -->
