@@ -14,6 +14,7 @@
                         <th>Competency Standard</th>
                         <th>Final Score</th>
                         <th>Status</th>
+                        <th>Certicate</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
@@ -24,6 +25,16 @@
                             <td>{{ $item['unit_title'] }}</td>
                             <td>{{ $item['final_score'] }}</td>
                             <td>{{ $item['status'] }}</td>
+                            <td>
+                                <form action="/exam-result/certificate" method="post"
+                                    @if ($item['final_score'] > 60) target="_blank" @endif>
+                                    @csrf
+                                    <input type="hidden" name="name" value="{{ Auth::user()->full_name }}">
+                                    <input type="hidden" name="program" value="{{ $item['unit_title'] }}">
+                                    <input type="hidden" name="final_score" value="{{ $item['final_score'] }}">
+                                    <button class="btn btn-primary" type="submit">Generate</button>
+                                </form>
+                            </td>
                         </tr>
                     @endforeach
 

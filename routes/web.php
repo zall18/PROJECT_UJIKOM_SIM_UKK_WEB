@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\AssessorController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\CompetencyElementController;
 use App\Http\Controllers\CompetencyStandardController;
 use App\Http\Controllers\ExaminationController;
+use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
@@ -70,7 +72,7 @@ Route::middleware('admin.session')->group(function () {
     //Student Managment Route
     Route::get('/student/managment', [StudentController::class, 'index']);
     Route::get('/student/create/import', [StudentController::class, 'studentImport']);
-    Route::post('/student/create/excel', [StudentController::class, 'import']);
+    Route::post('/student/create/excel', [ExcelController::class, 'import']);
 
     //Admin Managment Route
     Route::get('/admin/managment', [UserController::class, 'Admins']);
@@ -86,6 +88,20 @@ Route::middleware('admin.session')->group(function () {
     Route::get('/exam-result', [CompetencyStandardController::class, 'cs_admin']);
     Route::get('/exam-result/competency-standard/{id}', [ExaminationController::class, 'reportAdmin']);
 
+    //Competncy Standard & Element Route
+    Route::get('/admin/competency-standard/managment', [CompetencyStandardController::class, 'indexAdmin']);
+    Route::get('/admin/competency-standard/create', [CompetencyStandardController::class, 'adminCreatePage']);
+    Route::post('/admin/competency-standard/create', [CompetencyStandardController::class, 'Admincreate']);
+    Route::get('/admin/competency-standard/competency-elements/{id}', [CompetencyElementController::class, 'indexAdmin']);
+    Route::post('/admin/competency-standard/competency-elements', [CompetencyElementController::class, 'admincreate']);
+    Route::get('/admin/competency-standard/detail/{id}', [CompetencyStandardController::class, 'admindetailPage']);
+    Route::get('/admin/competency-standard/update/{id}', [CompetencyStandardController::class, 'adminupdatePage']);
+    Route::post('/admin/competency-standard/update/{id}', [CompetencyStandardController::class, 'adminupdate']);
+    Route::delete('/competency-standard/delete/{id}', [CompetencyStandardController::class, 'admindelete']);
+
+    Route::get('/admin/competency-standard/competency-elements/update/{cid}/{id}', [CompetencyElementController::class, 'adminupdatePage']);
+    Route::post('/admin/competency-standard/competency-elements/update/{cid}/{id}', [CompetencyElementController::class, 'adminupdate']);
+    Route::delete('/admin/competency-standard/competency-elements/delete/{cid}/{id}', [CompetencyElementController::class, 'admindelete']);
 });
 
 Route::middleware('assessor.session')->group(function () {
@@ -103,11 +119,11 @@ Route::middleware('assessor.session')->group(function () {
     Route::get('/competency-standard/detail/{id}', [CompetencyStandardController::class, 'detailPage']);
     Route::get('/competency-standard/update/{id}', [CompetencyStandardController::class, 'updatePage']);
     Route::post('/competency-standard/update/{id}', [CompetencyStandardController::class, 'update']);
+    Route::delete('/competency-standard/delete/{id}', [CompetencyStandardController::class, 'delete']);
 
     //Competency Element Route
     Route::get('/competency-standard/competency-elements/{id}', [CompetencyElementController::class, 'index']);
     Route::post('/competency-standard/competency-elements', [CompetencyElementController::class, 'create']);
-    Route::delete('/competency-standard/delete/{id}', [CompetencyStandardController::class, 'delete']);
     Route::get('/competency-standard/competency-elements/update/{cid}/{id}', [CompetencyElementController::class, 'updatePage']);
     Route::post('/competency-standard/competency-elements/update/{cid}/{id}', [CompetencyElementController::class, 'update']);
     Route::delete('/competency-standard/competency-elements/delete/{cid}/{id}', [CompetencyElementController::class, 'delete']);
@@ -119,6 +135,7 @@ Route::middleware('assessor.session')->group(function () {
     Route::get('/exam-result/{standard}', [ExaminationController::class, 'fetchExamResult']);
     Route::get('/exam-results/report/{standardId}', [ExaminationController::class, 'fetchReport']);
     Route::get('/exam/report/competency-standard/{id}', [ExaminationController::class, 'report']);
+    Route::get('/exam/report/{id}/excel', [ExcelController::class, 'exportReport']);
 
     //Assessor Profile Route
     Route::get('/assessor/me', [UserController::class, 'userAssessor']);
@@ -137,5 +154,6 @@ Route::middleware('student.session')->group(function () {
 
     Route::get('/student/exam-result', [ExaminationController::class, 'resultStudent']);
     Route::get('/student/profile', [StudentController::class, 'studentProfile']);
+    Route::post('/exam-result/certificate', [CertificateController::class, 'generateCertificate']);
 });
 

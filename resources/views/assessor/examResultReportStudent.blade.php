@@ -26,6 +26,10 @@
                         @endforeach
                     </select>
 
+                    <a href="/exam/report/{{ $standard->id }}/excel">
+                        <button class="btn btn-success w-100 mt-2">Export to Excel</button>
+                    </a>
+
                 </div>
             </div>
         </div>
@@ -34,7 +38,7 @@
     <div class="card mt-3">
         <h5 class="card-header">Table Exam Result</h5>
         <div class="table-responsive text-nowrap">
-            <table class="table"  id="report-table">
+            <table class="table" id="report-table">
                 <thead>
                     <tr>
                         <th>Id. </th>
@@ -71,62 +75,62 @@
         function fetchExamResultReport(standardId) {
             // Kirim request menggunakan Fetch API untuk mengganti data tanpa refresh halaman
             fetch(`/exam-results/report/${standardId}`, {
-                method: 'GET',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Fetched data:', data);
-                const tableHeader = document.querySelector('#report-table thead');
-                tableHeader.innerHTML = ''; // Bersihkan isi thead terlebih dahulu
-                let elementArray = Object.values(data.elements)
-                // Buat baris header awal
-                let headerRow = `
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Fetched data:', data);
+                    const tableHeader = document.querySelector('#report-table thead');
+                    tableHeader.innerHTML = ''; // Bersihkan isi thead terlebih dahulu
+                    let elementArray = Object.values(data.elements)
+                    // Buat baris header awal
+                    let headerRow = `
                     <tr>
                         <th>#</th>
                         <th>Student Full Name</th>
                 `;
 
-                // Iterasi array `element` untuk menambahkan kolom kriteria
-                elementArray.forEach(element => {
-                    headerRow += `<th>${element.criteria}</th>`;
-                });
+                    // Iterasi array `element` untuk menambahkan kolom kriteria
+                    elementArray.forEach(element => {
+                        headerRow += `<th>${element.criteria}</th>`;
+                    });
 
-                // Tambahkan kolom untuk skor akhir dan status kompetensi
-                headerRow += `
+                    // Tambahkan kolom untuk skor akhir dan status kompetensi
+                    headerRow += `
                         <th>Final Score (%)</th>
                         <th>Competency Status</th>
                     </tr>
                 `;
 
-                // Set isi <thead> dengan baris header yang telah dibuat
-                tableHeader.innerHTML = headerRow;
-                // Replace table content dynamically
-                const studentsArray = Object.values(data.students);
-                console.log(studentsArray);
+                    // Set isi <thead> dengan baris header yang telah dibuat
+                    tableHeader.innerHTML = headerRow;
+                    // Replace table content dynamically
+                    const studentsArray = Object.values(data.students);
+                    console.log(studentsArray);
 
-                const tableBody = document.querySelector('#report-table tbody');
-                tableBody.innerHTML = '';
+                    const tableBody = document.querySelector('#report-table tbody');
+                    tableBody.innerHTML = '';
 
-                studentsArray.forEach((student, index) => {
-                    let row = `<tr>
+                    studentsArray.forEach((student, index) => {
+                        let row = `<tr>
                         <td>${index + 1}</td>
                         <td>${student.student_name}</td>`;
 
-                    student.elements.forEach(element => {
-                        row += `<td>${element.status}</td>`;
-                    });
+                        student.elements.forEach(element => {
+                            row += `<td>${element.status}</td>`;
+                        });
 
-                    row += `
+                        row += `
                         <td>${student.final_score.toFixed(2)}%</td>
                         <td>${student.status}</td>
                     </tr>`;
-                    tableBody.innerHTML += row;
-                });
-            })
-            .catch(error => console.error('Error:', error));
+                        tableBody.innerHTML += row;
+                    });
+                })
+                .catch(error => console.error('Error:', error));
         }
     </script>
 @endsection

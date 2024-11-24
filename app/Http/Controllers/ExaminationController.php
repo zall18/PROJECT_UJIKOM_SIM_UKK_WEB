@@ -219,8 +219,8 @@ class ExaminationController extends Controller
         $students = Student::where('major_id', $standard->major_id)->with('user')->get();
         $elements = CompetencyElement::where('competency_standard_id', $request->standard_id)->get();
         $examinations = Examination::where('standard_id', $request->standard_id)
-                                    ->where('student_id', $request->id)
-                                    ->get();
+            ->where('student_id', $request->id)
+            ->get();
 
         if (!$student) {
             return response()->json([
@@ -239,7 +239,8 @@ class ExaminationController extends Controller
 
 
 
-    public function grading(Request $request) {
+    public function grading(Request $request)
+    {
         // dd($request->status);
 
         $elements = $request->elements;
@@ -249,14 +250,14 @@ class ExaminationController extends Controller
             // dd([$request->status0, $request->status1]);
             $statusKey = 'status' . $key; // Membuat nama input seperti 'status0', 'status1'
             $status = $request->input($statusKey);
-            if ($request->status.$key != null) {
+            if ($request->status . $key != null) {
                 $exam = Examination::where('student_id', $request->id)->where('element_id', $value)->first();
                 // dd($exam);
                 if ($exam != null) {
                     Examination::where('student_id', $request->id)->where('element_id', $value)->update([
                         'status' => $status,
                     ]);
-                }else{
+                } else {
                     // dd($exam);
                     Examination::create([
                         'exam_date' => now(),
@@ -276,21 +277,22 @@ class ExaminationController extends Controller
         ]);
     }
 
-    private function conversi($grade){
-        if ($grade >= 100 && $grade <= 91) {
+    private function conversi($grade)
+    {
+        if ($grade >= 91 && $grade <= 100) {
             return 'Very Competent';
-        }else if($grade >= 90 && $grade <= 75){
-            return 'Competen';
-        }else if($grade >= 61 && $grade <= 74){
+        } else if ($grade >= 75 && $grade <= 90) {
+            return 'Competent';
+        } else if ($grade >= 61 && $grade <= 74) {
             return 'Quite Competent';
-        }else if($grade > 60){
+        } else if ($grade <= 60) {
             return 'Not Competent';
         }
     }
 
     public function resultStudent(Request $request)
     {
-       // Ambil student yang sedang login
+        // Ambil student yang sedang login
         $student = Auth::user()->student;
 
         // Ambil semua competency standard berdasarkan jurusan student
@@ -322,9 +324,13 @@ class ExaminationController extends Controller
 
         $data['active'] = 'examResult';
         $data['statusSummary'] = $statusSummary;
+        $data['student'] = $student;
 
         return view('student.examResult', $data);
     }
+
+
+
 
 
 }

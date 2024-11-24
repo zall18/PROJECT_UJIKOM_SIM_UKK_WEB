@@ -105,6 +105,15 @@
                 <div data-i18n="Tables">Major Student </div>
             </a>
         </li>
+        <!-- Components -->
+        <li class="menu-header small text-uppercase"><span class="menu-header-text">Competency</span></li>
+
+        <li class="menu-item {{ $active == 'competency' ? 'active' : '' }}">
+            <a href="/admin/competency-standard/managment" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-table"></i>
+                <div data-i18n="Tables">Competency Standards</div>
+            </a>
+        </li>
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Examination</span></li>
         <li class="menu-item">
             <a href="/exam-result" class="menu-link">
