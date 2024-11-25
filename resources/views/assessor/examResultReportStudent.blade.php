@@ -5,11 +5,12 @@
         <div class="d-flex align-items-end row">
             <div class="col-sm-12">
                 <div class="card-body">
-                    <h5 class="card-title text-primary">Exam Result {{ $standard->unit_title }}</h5>
-                    <p class="mb-1">
+                    <h5 class="card-title text-primary">Exam Result <span id="unit_title">{{ $standard->unit_title }}</span>
+                    </h5>
+                    <p class="mb-1" id="unit_code">
                         {{ $standard->unit_code }}
                     </p>
-                    <p class="mb-4">
+                    <p class="mb-4" id="unit_description">
                         {{ $standard->unit_description }}
                     </p>
                     {{-- <a href="/competency-standard/delete/{{ $competency->id }}" class="">
@@ -85,6 +86,21 @@
                 .then(response => response.json())
                 .then(data => {
                     console.log('Fetched data:', data);
+
+
+                    const unit_code = document.getElementById("unit_code");
+                    const unit_title = document.getElementById("unit_title");
+                    const unit_description = document.getElementById("unit_description");
+
+                    unit_code.innerHTML = '';
+                    unit_title.innerHTML = '';
+                    unit_description.innerHTML = '';
+
+                    unit_code.innerHTML = data.standard.unit_code;
+                    unit_title.innerHTML = data.standard.unit_title;
+                    unit_description.innerHTML = data.standard.unit_description;
+
+
                     const tableHeader = document.querySelector('#report-table thead');
                     tableHeader.innerHTML = ''; // Bersihkan isi thead terlebih dahulu
                     let elementArray = Object.values(data.elements)

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CompetencyElement;
 use App\Models\CompetencyStandard;
 use App\Models\Examination;
+use App\Models\Major;
 use App\Models\Student;
 use App\Models\User;
 use Auth;
@@ -42,6 +43,7 @@ class ExcelController extends Controller
             return [
                 'student_id' => $exams->first()->id,
                 'student_name' => $exams->first()->student->user->full_name,
+                'student_nisn' => $exams->first()->student->nisn,
                 'elements' => $elementsStatus,
                 'final_score' => $finalScore,
                 'status' => $status
@@ -64,7 +66,7 @@ class ExcelController extends Controller
         $headerStyle = (new StyleBuilder())->setFontBold()->build();
 
         // Header
-        $header = ['Student ID', 'Student Name'];
+        $header = ['Student ID', 'Student Name', 'Student NISN'];
         foreach ($data['elements'] as $element) {
             $header[] = "Element {$element->criteria}";
         }
@@ -78,6 +80,7 @@ class ExcelController extends Controller
             $row = [
                 $student['student_id'] ?? '-',
                 $student['student_name'] ?? '-',
+                $student['student_nisn'] ?? '-',
             ];
             foreach ($student['elements'] as $element) {
                 $row[] = $element['status'] ?? 'N/A';
@@ -104,6 +107,10 @@ class ExcelController extends Controller
         $reader = ReaderEntityFactory::createXLSXReader();
         $reader->open($file);
 
+        // Deklarasikan variabel $invalidRows
+        $invalidRows = [];
+        $duplicateRows = [];
+
         foreach ($reader->getSheetIterator() as $sheet) {
             $isFirstRow = true;
             foreach ($sheet->getRowIterator() as $index => $row) {
@@ -111,9 +118,29 @@ class ExcelController extends Controller
                     $isFirstRow = false; // Lewati baris pertama (header)
                     continue;
                 }
-                $cells = $row->getCells();
 
-                if ($index === 0) {
+                $cells = $row->getCells();
+                $email = $cells[1];
+                $nisn = $cells[3];
+                $majorId = $cells[5];
+                $major = Major::find($majorId);
+
+                if (!$major) {
+                    $invalidRows[] = [
+                        'row' => $index,
+                        'major_id' => $majorId
+                    ];
+                    continue;
+                }
+
+                $isDuplicateEmail = User::where('email', $email)->exists();
+                $isDuplicateNisn = Student::where('nisn', $nisn)->exists();
+
+                if ($isDuplicateEmail || $isDuplicateNisn) {
+                    $duplicateRows[] = [
+                        'row' => $index,
+                        'issue' => $isDuplicateEmail ? "Duplicate email: $email" : "Duplicate NISN: $nisn"
+                    ];
                     continue;
                 }
 
@@ -123,14 +150,14 @@ class ExcelController extends Controller
                     'username' => strtolower(str_replace(' ', '', $cells[0])),
                     'email' => $cells[1],
                     'password' => Hash::make("smkypc"),
-                    'phone' => $cells[2],
+                    'phone' => substr($cells[2], 0, 11),
                     'role' => 'student',
                     'is_active' => '1'
                 ])->id;
 
                 // Simpan data ke tabel students dengan relasi ke user
                 Student::create([
-                    'nisn' => $cells[3],
+                    'nisn' => substr($cells[3], 0, ),
                     'grade_level' => $cells[4],
                     'major_id' => $cells[5],
                     'user_id' => $user
@@ -138,12 +165,21 @@ class ExcelController extends Controller
             }
         }
 
+        // Tampilkan alert warning jika ada baris yang tidak valid
+
         $reader->close();
 
-        Alert::success('Student', 'Success to import from excel!');
+        if (!empty($invalidRows)) {
+            Alert::warning('Warning', 'Some rows were skipped due to invalid major_id.');
+        } else if (!empty($duplicateRows)) {
+            Alert::warning('Warning', 'Some rows were skipped due to duplicate data.');
+        } else {
+            Alert::success('Student', 'Success to import from excel!');
+        }
+
 
         return redirect('/student/managment');
-
     }
+
 
 }

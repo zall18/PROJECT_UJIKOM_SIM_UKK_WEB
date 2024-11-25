@@ -80,7 +80,7 @@ class ExaminationController extends Controller
             ];
         })->values();
 
-        return response()->json(['students' => $students]);
+        return response()->json(['students' => $students, 'standard' => $standard]);
     }
 
     //Show exam result report from competency's assessor
@@ -149,7 +149,7 @@ class ExaminationController extends Controller
             ];
         });
 
-        return response()->json(['students' => $students, 'elements' => $elements]);
+        return response()->json(['students' => $students, 'elements' => $elements, 'standard' => $standard]);
     }
 
 

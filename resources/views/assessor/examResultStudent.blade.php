@@ -5,11 +5,12 @@
         <div class="d-flex align-items-end row">
             <div class="col-sm-12">
                 <div class="card-body">
-                    <h5 class="card-title text-primary">Exam Result {{ $standard->unit_title }}</h5>
-                    <p class="mb-1">
+                    <h5 class="card-title text-primary">Exam Result <span id="unit_title">{{ $standard->unit_title }}</span>
+                    </h5>
+                    <p class="mb-1" id="unit_code">
                         {{ $standard->unit_code }}
                     </p>
-                    <p class="mb-4">
+                    <p class="mb-4" id="unit_description">
                         {{ $standard->unit_description }}
                     </p>
                     {{-- <form action="/select/exam/result/student" method="GET" id="form-standar">
@@ -24,7 +25,8 @@
                     {{-- @dd($standard->id) --}}
                     <select id="roleSelect" class="form-select" name="role" onchange="fetchExamResult(this.value)">
                         @foreach ($standars as $item)
-                            <option value="{{ $item->id }}" {{ $standard->id == $item->id ? 'selected' : '' }}>{{ $item->unit_title }}</option>
+                            <option value="{{ $item->id }}" {{ $standard->id == $item->id ? 'selected' : '' }}>
+                                {{ $item->unit_title }}</option>
                         @endforeach
                     </select>
 
@@ -87,6 +89,19 @@
                     const tableBody = document.querySelector('#manage-table tbody');
                     tableBody.innerHTML = ''; // Hapus isi tabel sebelumnya
 
+                    const unit_code = document.getElementById("unit_code");
+                    const unit_title = document.getElementById("unit_title");
+                    const unit_description = document.getElementById("unit_description");
+
+                    unit_code.innerHTML = '';
+                    unit_title.innerHTML = '';
+                    unit_description.innerHTML = '';
+
+                    unit_code.innerHTML = data.standard.unit_code;
+                    unit_title.innerHTML = data.standard.unit_title;
+                    unit_description.innerHTML = data.standard.unit_description;
+
+
                     // Perbarui isi tabel dengan data yang diterima
                     data.students.forEach((student, index) => {
                         tableBody.innerHTML += `
@@ -105,5 +120,4 @@
                 });
         }
     </script>
-
 @endsection

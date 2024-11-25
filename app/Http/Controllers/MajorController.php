@@ -85,11 +85,10 @@ class MajorController extends Controller
         $stundent = Student::where('major_id', $request->id)->get()->count();
         $standard = CompetencyStandard::where('major_id', $request->id)->get()->count();
 
-        if($stundent != 0 && $standard != 0)
-        {
+        if ($stundent > 0 || $standard > 0) {
             Alert::error('Failed to delete', 'There is still student and competency standard that connect with this major');
             return back();
-        }else{
+        } else {
             Major::where('id', $request->id)->delete();
             return redirect('major/managment');
         }

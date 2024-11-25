@@ -138,7 +138,7 @@ class UserController extends Controller
             'username' => ['required'],
             'email' => ['required', 'email'],
             'phone' => ['required'],
-            'role' => ['required']
+            'role' => ['required|in:admin, assessor, student']
         ]);
 
         if ($validate) {
