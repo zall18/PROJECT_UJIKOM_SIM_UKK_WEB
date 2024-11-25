@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AuthController extends Controller
 {
@@ -18,8 +19,9 @@ class AuthController extends Controller
         ]);
 
         if ($validate) {
+            $remember = $request->has('remember');
 
-            if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $remember)) {
 
                 $role = Auth::user()->role;
 
@@ -33,7 +35,7 @@ class AuthController extends Controller
                 }
 
             }else{
-                toast('Failed to login', 'error');
+                Alert::toast('Login Failed', 'error');
                 return redirect('/');
             }
 

@@ -6,6 +6,7 @@ use App\Models\Assessor;
 use App\Models\Competency_Standard;
 use App\Models\CompetencyElement;
 use App\Models\CompetencyStandard;
+use App\Models\Examination;
 use App\Models\Major;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -92,7 +93,7 @@ class CompetencyStandardController extends Controller
         $title = 'Delete Part of Competency';
         $text = "Are you sure you want to delete?";
         confirmDelete($title, $text);
-        return view('admin.competencyDetail', $data);
+        return view('assessor.competencyDetail', $data);
     }
     public function admindetailPage(Request $request)
     {
@@ -108,11 +109,19 @@ class CompetencyStandardController extends Controller
     //Delete competency standard and the elements
     public function delete(Request $request)
     {
+        $exam = Examination::where('standard_id', $request->id)->get()->count();
 
-        CompetencyElement::where('competency_standard_id', $request->id)->delete();
-        CompetencyStandard::where('id', $request->id)->delete();
-        Alert::success('Competency', 'Success to delete data!');
-        return redirect('/competency-standard/managment');
+        if ($exam > 0) {
+            Alert::error('There are still related exam results', 'Failed to delete');
+            return back();
+        }else{
+            CompetencyElement::where('competency_standard_id', $request->id)->delete();
+            CompetencyStandard::where('id', $request->id)->delete();
+            Alert::success('Competency', 'Success to delete data!');
+            return redirect('/competency-standard/managment');
+        }
+
+
 
     }
     public function admindelete(Request $request)
@@ -147,7 +156,7 @@ class CompetencyStandardController extends Controller
     public function update(Request $request)
     {
         $validate = $request->validate([
-            // 'unit_code' => ['required', 'unique:competency_standards,unit_code'],
+            'unit_code' => ['required'],
             'unit_title' => ['required'],
             'unit_description' => ['required'],
             'major_id' => ['required'],

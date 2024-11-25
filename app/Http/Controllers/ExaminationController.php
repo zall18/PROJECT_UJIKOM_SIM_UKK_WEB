@@ -21,7 +21,7 @@ class ExaminationController extends Controller
             ->get();
 
         // Ambil standar_id dari request, atau gunakan default 1 jika kosong
-        $standar_id = $request->input('standar_id', 1); // Default ke 1 jika tidak ada input
+        $standar_id = $request->id; // Default ke 1 jika tidak ada input
 
         // Validasi standar ID
         $standard = CompetencyStandard::where('id', $standar_id)->with('competency_elements')->first();
@@ -39,10 +39,11 @@ class ExaminationController extends Controller
             $completedElements = $exams->where('status', 1)->unique('element_id')->count();
 
             $finalScore = $totalElements > 0 ? round(($completedElements / $totalElements) * 100) : 0;
-            $status = $finalScore >= 90 ? 'Competent' : 'Not Competent';
+            $status = $this->conversi($finalScore);
 
             return [
                 'student_id' => $exams->first()->student_id,
+                'student_nisn' => $exams->first()->student->nisn,
                 'student_name' => $exams->first()->student->user->full_name,
                 'final_score' => $finalScore,
                 'status' => $status,
@@ -68,10 +69,11 @@ class ExaminationController extends Controller
             $completedElements = $exams->where('status', 1)->count();
 
             $finalScore = $totalElements > 0 ? round(($completedElements / $totalElements) * 100) : 0;
-            $status = $finalScore >= 75 ? 'Competent' : 'Not Competent';
+            $status = $this->conversi($finalScore);
 
             return [
                 'student_id' => $exams->first()->student_id,
+                'student_nisn' => $exams->first()->student->nisn,
                 'student_name' => $exams->first()->student->user->full_name,
                 'final_score' => $finalScore,
                 'status' => $status,
@@ -95,7 +97,7 @@ class ExaminationController extends Controller
             $totalElements = $standard->competency_elements_count;
             $completedElements = $exams->where('status', 1)->count(); // Menghitung elemen yang statusnya kompeten
             $finalScore = round(($completedElements / $totalElements) * 100);
-            $status = $finalScore >= 75 ? 'Competent' : 'Not Competent';
+            $status = $this->conversi($finalScore);
             $elementsStatus = $standard->competency_elements->sortBy('code')->map(function ($element) use ($exams) {
                 $exam = $exams->firstWhere('element_id', $element->id);
                 return [
@@ -106,6 +108,7 @@ class ExaminationController extends Controller
 
             return [
                 'student_id' => $exams->first()->id,
+                'student_nisn' => $exams->first()->student->nisn,
                 'student_name' => $exams->first()->student->user->full_name,
                 'elements' => $elementsStatus,
                 'final_score' => $finalScore,
@@ -126,7 +129,7 @@ class ExaminationController extends Controller
             $totalElements = $standard->competency_elements->count();
             $completedElements = $exams->where('status', 1)->count();
             $finalScore = round(($completedElements / $totalElements) * 100);
-            $status = $finalScore >= 75 ? 'Competent' : 'Not Competent';
+            $status = $this->conversi($finalScore);
 
             $elementsStatus = $standard->competency_elements->map(function ($element) use ($exams) {
                 $exam = $exams->firstWhere('element_id', $element->id);
@@ -138,6 +141,7 @@ class ExaminationController extends Controller
 
             return [
                 'student_id' => $exams->first()->student_id,
+                'student_nisn' => $exams->first()->student->nisn,
                 'student_name' => $exams->first()->student->user->full_name,
                 'elements' => $elementsStatus,
                 'final_score' => $finalScore,
@@ -155,6 +159,7 @@ class ExaminationController extends Controller
         $data['elements'] = CompetencyElement::where('competency_standard_id', $request->id)->get();
         $data['standard'] = CompetencyStandard::where('id', $request->id)->first();
         $data['active'] = 'examResultReport';
+        $data['standards'] = CompetencyStandard::all();
         $standard = CompetencyStandard::where('id', $request->id)->withCount('competency_elements')->first();
         // Mendapatkan data ujian murid berdasarkan standard yang dipilih
         $examinations = Examination::where('standard_id', $request->id)->get();
@@ -172,7 +177,8 @@ class ExaminationController extends Controller
             });
 
             return [
-                'student_id' => $exams->first()->id,
+                'student_id' => $exams->first()->student->id,
+                'student_nisn' => $exams->first()->student->nisn,
                 'student_name' => $exams->first()->student->user->full_name,
                 'elements' => $elementsStatus,
                 'final_score' => $finalScore,
@@ -316,6 +322,7 @@ class ExaminationController extends Controller
             $status = $this->conversi($finalScore);
 
             return [
+                'standard_id' => $standard->id,
                 'unit_title' => $standard->unit_title,
                 'status' => $status,
                 'final_score' => $finalScore,

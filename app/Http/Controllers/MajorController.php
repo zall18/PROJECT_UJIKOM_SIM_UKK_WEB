@@ -88,11 +88,12 @@ class MajorController extends Controller
         if($stundent != 0 && $standard != 0)
         {
             Alert::error('Failed to delete', 'There is still student and competency standard that connect with this major');
-            return;
+            return back();
+        }else{
+            Major::where('id', $request->id)->delete();
+            return redirect('major/managment');
         }
 
-        Major::where('id', $request->id)->delete();
-        return redirect('major/managment');
     }
 
     public function ms()

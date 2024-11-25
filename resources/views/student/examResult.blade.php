@@ -32,6 +32,8 @@
                                     <input type="hidden" name="name" value="{{ Auth::user()->full_name }}">
                                     <input type="hidden" name="program" value="{{ $item['unit_title'] }}">
                                     <input type="hidden" name="final_score" value="{{ $item['final_score'] }}">
+                                    <input type="hidden" name="standard_id" value="{{ $item['standard_id'] }}">
+                                    {{-- @dd($item['standard_id']) --}}
                                     <button class="btn btn-primary" type="submit">Generate</button>
                                 </form>
                             </td>

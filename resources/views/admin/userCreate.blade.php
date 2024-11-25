@@ -30,7 +30,7 @@
                                         class='bx bx-user'></i></span>
                                 <input type="text" id="basic-icon-default-company" class="form-control"
                                     placeholder="rizal, bla, bla" aria-label="rizal, bla, bla." name="full_name"
-                                    aria-describedby="basic-icon-default-company2" />
+                                    aria-describedby="basic-icon-default-company2" value="{{ old('full_name') }}" />
                             </div>
                         </div>
                         <div class="mb-3">
@@ -40,7 +40,7 @@
                                         class='bx bx-user'></i></span>
                                 <input type="text" id="basic-icon-default-company" class="form-control"
                                     placeholder="rizal, bla, bla" aria-label="rizal, bla, bla." name="username"
-                                    aria-describedby="basic-icon-default-company2" />
+                                    aria-describedby="basic-icon-default-company2" {{ old('username') }} />
                             </div>
                         </div>
                         <div class="mb-3">
@@ -50,7 +50,7 @@
                                         class='bx bx-envelope'></i></span>
                                 <input type="text" id="basic-icon-default-company" class="form-control"
                                     placeholder="user@example.com" aria-label="user@example.com" name="email"
-                                    aria-describedby="basic-icon-default-company2" />
+                                    aria-describedby="basic-icon-default-company2" value="{{ old('email') }}" />
                             </div>
                         </div>
                         <div class="mb-3">
@@ -60,7 +60,7 @@
                                         class='bx bx-low-vision'></i></span>
                                 <input type="password" id="basic-icon-default-company" class="form-control"
                                     placeholder="****" aria-label="****" name="password"
-                                    aria-describedby="basic-icon-default-company2" />
+                                    aria-describedby="basic-icon-default-company2"  />
                             </div>
                         </div>
                         <div class="mb-3">
@@ -70,7 +70,7 @@
                                         class='bx bx-phone'></i></span>
                                 <input type="text" id="basic-icon-default-company" class="form-control"
                                     placeholder="087*****" aria-label="087*****" name="phone"
-                                    aria-describedby="basic-icon-default-company2" />
+                                    aria-describedby="basic-icon-default-company2" value="{{ old('phone') }}" maxlength="11"/>
                             </div>
                         </div>
                         <div class="mb-3">
@@ -91,7 +91,7 @@
                                             class='bx bx-phone'></i></span>
                                     <input type="text" id="basic-icon-default-company" class="form-control"
                                         placeholder="0070****" aria-label="0070****" name="nisn"
-                                        aria-describedby="basic-icon-default-company2" />
+                                        aria-describedby="basic-icon-default-company2" value="{{ old('nisn') }}" maxlength="10" />
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -130,7 +130,7 @@
                                             class='bx bx-phone'></i></span>
                                     <input type="text" id="basic-icon-default-company" class="form-control"
                                         placeholder="SMK YPC TASIK, PT. bla, Etc" aria-label="SMK YPC TASIK, PT. bla, Etc"
-                                        name="description" aria-describedby="basic-icon-default-company2" />
+                                        name="description" aria-describedby="basic-icon-default-company2" value="{{ old('description') }}" />
                                 </div>
                             </div>
                         </div>

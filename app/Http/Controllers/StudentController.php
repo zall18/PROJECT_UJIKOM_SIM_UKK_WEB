@@ -12,6 +12,7 @@ use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -85,6 +86,35 @@ class StudentController extends Controller
         $data['majors'] = Major::all();
         $data['active'] = 'user';
         return view('student.profile', $data);
+
+    }
+    public function profileUpdate(Request $request)
+    {
+
+        $data['user'] = User::where('id', Auth::user()->id)->first();
+        $data['majors'] = Major::all();
+        $data['active'] = 'user';
+        return view('student.editProfile', $data);
+
+    }
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+            'username' => 'required',
+            'email' => 'required',
+            'phone' => 'required'
+        ]);
+
+        User::where('id', $request->id)->update([
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => $request->password != null ? bcrypt($request->password) : DB::raw('password'),
+            'phone' => $request->phone
+        ]);
+
+        return redirect('/student/profile');
 
     }
 }

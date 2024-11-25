@@ -16,7 +16,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $data['users'] = User::all();
+        $data['users'] = User::where('id', '!=', Auth::user()->id)->get();
         $data['active'] = 'user';
         $title = 'Delete Major!';
         $text = "Are you sure you want to delete?";
@@ -219,7 +219,7 @@ class UserController extends Controller
     //Show user role admin
     public function Admins()
     {
-        $data['admins'] = User::where('role', 'admin')->get();
+        $data['admins'] = User::where('role', 'admin')->where('id', '!=', Auth::user()->id)->get();
         $data['active'] = 'admin';
         return view('admin.adminManage', $data);
     }
@@ -240,11 +240,17 @@ class UserController extends Controller
         return view('assessor.assessorProfile', $data);
     }
 
+    public function assessorUpdate()
+    {
+        $data['user'] = Auth::user();
+        $data['active'] = 'dashboard';
+        return view('assessor.profileUpdate', $data);
+    }
+
     //Update profile assessor
     public function assessorProfileUpdate(Request $request)
     {
         $validate = $request->validate([
-            'full_name' => ['required'],
             'username' => ['required'],
             'email' => ['required', 'email'],
             'phone' => ['required'],
@@ -253,13 +259,10 @@ class UserController extends Controller
 
         if ($validate) {
             User::where('id', Auth::user()->id)->update([
-                'full_name' => $request->full_name,
                 'username' => $request->username,
                 'email' => $request->email,
                 'password' => $request->password != null ? bcrypt($request->password) : DB::raw('password'),
                 'phone' => $request->phone,
-                'role' => $request->role,
-                'is_active' => 1
             ]);
 
             return redirect('/assessor/me');

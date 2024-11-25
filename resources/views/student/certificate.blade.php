@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certificate of Achievement</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.css') }}">
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -21,6 +21,7 @@
             border: 5px solid #133E87;
             border-radius: 10px;
             max-width: 800px;
+
             margin: auto;
             box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
         }
@@ -61,6 +62,76 @@
             font-size: 14px;
             color: #777;
         }
+        #table-element{
+            width: 100%;
+
+        }
+        /* #table-element thead tr th{
+            border-left: 1px black solid;
+            border-right: 1px black solid;
+        } */
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .card-header {
+            background-color: #133E87;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        thead {
+            background-color: #608BC1;
+            color: #fff;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f3f3e0;
+        }
+
+        tbody tr:hover {
+            background-color: #e8e8e8;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            font-size: 14px;
+            border-radius: 5px;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .bg-success {
+            background-color: #28a745;
+        }
+
+        .bg-danger {
+            background-color: #dc3545;
+        }
     </style>
 </head>
 
@@ -74,14 +145,45 @@
         <p class="certificate-body">with a final score of</p>
         <p class="certificate-score">{{ $final_score }}</p>
         <p class="certificate-body">on {{ $date }}</p>
-        <div class="certificate-footer">
-            <p>Issued by Creative Spark Agency</p>
-            <p>www.creativespark.com</p>
+
+    </div>
+    <div class="certificate-container text-center">
+        <div class="card">
+            <div class="card-header">
+                Detail Competency Element
+            </div>
+            <div class="card-body">
+                <table id="table-element">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Criteria</th>
+                            <th>Competency Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Example data -->
+                        @foreach ($elements as $index => $item)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $item->competency_element->criteria }}</td>
+                            <td>
+                                <span class="badge {{ $item->status == 1 ? 'bg-success' : 'bg-danger' }}">
+                                    {{ $item->status == 1 ? 'Competent' : 'Not Competent' }}
+                                </span>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
+
+
     <!-- Bootstrap JS (optional for interactive elements) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('bootstrap/js/bootstrap.js') }}"></script>
 </body>
 
 </html>

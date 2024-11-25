@@ -21,9 +21,10 @@
                             @endforeach
                         </select>
                     </form> --}}
+                    {{-- @dd($standard->id) --}}
                     <select id="roleSelect" class="form-select" name="role" onchange="fetchExamResult(this.value)">
                         @foreach ($standars as $item)
-                            <option value="{{ $item->id }}">{{ $item->unit_title }}</option>
+                            <option value="{{ $item->id }}" {{ $standard->id == $item->id ? 'selected' : '' }}>{{ $item->unit_title }}</option>
                         @endforeach
                     </select>
 
@@ -47,6 +48,7 @@
                     <tr>
                         <th>Id. </th>
                         <th>Student Full Name</th>
+                        <th>Student NISN</th>
                         <th>Final Score (%)</th>
                         <th>Competency Status</th>
 
@@ -58,6 +60,7 @@
                             <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{ $index }}</strong>
                             </td>
                             <td>{{ $student['student_name'] }}</td>
+                            <td>{{ $student['student_nisn'] }}</td>
                             <!-- Ganti dengan nama murid jika ada relasi -->
                             <td>{{ number_format($student['final_score'], 2) }}%</td>
                             <td>{{ $student['status'] }}</td>
@@ -90,6 +93,7 @@
                             <tr>
                                 <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${index + 1}</strong></td>
                                 <td>${student.student_name}</td>
+                                <td>${student.student_nisn}</td>
                                 <td>${parseFloat(student.final_score).toFixed(2)}%</td>
                                 <td>${student.status}</td>
                             </tr>

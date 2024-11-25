@@ -16,6 +16,11 @@ class Examination extends Model
         return $this->belongsTo(CompetencyStandard::class);
     }
 
+    public function competency_element()
+    {
+        return $this->belongsTo(CompetencyElement::class, 'element_id');
+    }
+
     public function student()
     {
         return $this->belongsTo(Student::class);

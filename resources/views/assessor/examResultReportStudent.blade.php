@@ -43,6 +43,7 @@
                     <tr>
                         <th>Id. </th>
                         <th>Student Full Name</th>
+                        <th>Student NISN</th>
                         @foreach ($elements as $item)
                             <th>{{ $item->criteria }}</th>
                         @endforeach
@@ -57,6 +58,7 @@
                             <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{ $index }}</strong>
                             </td>
                             <td>{{ $student['student_name'] }}</td>
+                            <td>{{ $student['student_nisn'] }}</td>
                             @foreach ($student['elements'] as $item)
                                 <td>{{ $item['status'] }}</td>
                             @endforeach
@@ -91,6 +93,7 @@
                     <tr>
                         <th>#</th>
                         <th>Student Full Name</th>
+                        <th>Student NISN</th>
                 `;
 
                     // Iterasi array `element` untuk menambahkan kolom kriteria
@@ -117,7 +120,9 @@
                     studentsArray.forEach((student, index) => {
                         let row = `<tr>
                         <td>${index + 1}</td>
-                        <td>${student.student_name}</td>`;
+                        <td>${student.student_name}</td>
+                        <td>${student.student_nisn}</td>
+                        `;
 
                         student.elements.forEach(element => {
                             row += `<td>${element.status}</td>`;

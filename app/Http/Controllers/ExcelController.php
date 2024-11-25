@@ -21,7 +21,7 @@ class ExcelController extends Controller
     {
         $data['elements'] = CompetencyElement::where('competency_standard_id', $request->id)->get();
         $data['standard'] = CompetencyStandard::where('id', $request->id)->first();
-        $data['standards'] = CompetencyStandard::with('major')->where('assessor_id', Auth::user()->assessor->id)->get();
+
         $data['active'] = 'examResultReport';
         $standard = CompetencyStandard::where('id', $request->id)->withCount('competency_elements')->first();
         // Mendapatkan data ujian murid berdasarkan standard yang dipilih

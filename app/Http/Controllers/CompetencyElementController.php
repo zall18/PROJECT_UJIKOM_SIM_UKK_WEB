@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CompetencyElement;
 use App\Models\CompetencyStandard;
+use App\Models\Examination;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -124,11 +125,21 @@ class CompetencyElementController extends Controller
     //Delete competency standard
     public function delete(Request $request)
     {
-        CompetencyElement::where('id', $request->id)->delete();
 
-        Alert::success('Competency', 'Success to delete data!');
+        $exam = Examination::where('element_id', $request->id)->get()->count();
 
-        return redirect('/competency-standard/detail/' . $request->cid);
+        if ($exam > 0){
+            Alert::error('There are still related exam results', 'Failed to delete');
+            return back();
+        }else{
+            CompetencyElement::where('id', $request->id)->delete();
+
+            Alert::success('Competency', 'Success to delete data!');
+
+            return redirect('/competency-standard/detail/' . $request->cid);
+        }
+
+
 
     }
     public function admindelete(Request $request)

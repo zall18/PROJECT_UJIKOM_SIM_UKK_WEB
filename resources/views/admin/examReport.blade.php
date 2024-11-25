@@ -7,7 +7,7 @@
     <div class="card">
         <h5 class="card-header">Table Competency Standard - Exam Result Report</h5>
         <div class="table-responsive text-nowrap">
-            <table class="table">
+            <table class="table" id="manage-table">
                 <thead>
                     <tr>
                         <th>Id. </th>
@@ -45,10 +45,5 @@
                 </tbody>
             </table>
         </div>
-    </div>
-    <!--/ Basic Bootstrap Table -->
-
-    <div class="buy-now">
-        <a href="/competency-standard/create" class="btn btn-danger btn-buy-now">Create Competenncy Standard</a>
     </div>
 @endsection

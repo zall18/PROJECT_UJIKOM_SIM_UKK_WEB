@@ -21,7 +21,7 @@
                             </ul>
                         </div>
                     @endif
-                    <form action="/assessor/me" method="post">
+                    <form>
                         @csrf
                         <div class="mb-3">
                             <label class="form-label" for="basic-icon-default-company">Full Name</label>
@@ -119,8 +119,8 @@
                         @endif
 
 
-                        <button type="submit" class="btn btn-primary w-100">Update Your Profile</button>
                     </form>
+                    <a href="/student/profile/update"><button class="btn btn-primary w-100">Update Your Profile</button></a>
                 </div>
             </div>
         </div>

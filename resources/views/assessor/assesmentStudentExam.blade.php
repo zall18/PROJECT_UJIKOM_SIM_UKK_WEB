@@ -1,6 +1,6 @@
     @extends('index')
     @section('container')
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><a href="/assesment">Assesment</a> / {{ $standard->unit_title }} / <a href="/assesment/competency-standard/{{ $standard->id }}">Student</a> /</span> {{ $student->user->full_name }}</h4>
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><a href="/assesment">Assesment</a> / {{ $standard->unit_title }} / <a href="/assesment/competency-standard/{{ $standard->id }}">Student</a> /</span> <span id="student-name">{{ $student->user->full_name }}</span></h4>
     <div class="card">
         <h5 class="card-header">Assessment</h5>
         <div class="row m-2">
@@ -130,6 +130,9 @@
                 })
                 .then(data => {
                     console.log('Data fetched:', data);
+
+                    const nameStudent = document.getElementById("student-name");
+                    nameStudent.innerHTML = '';
 
                     // Update nama student di header
                     document.querySelector('h4 span.text-muted').innerHTML = `

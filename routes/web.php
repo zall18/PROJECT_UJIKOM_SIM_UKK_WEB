@@ -30,12 +30,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/auth/login', [AuthController::class, 'login']);
-Route::get('/auth/logout', [AuthController::class, 'logout']);
-Route::get('/', function () {
-    $data['active'] = 'dashboard';
-    return view('login', $data);
+Route::middleware('guest')->group(function () {
+
+    Route::post('/auth/login', [AuthController::class, 'login']);
+    Route::get('/', function () {
+        $data['active'] = 'dashboard';
+        return view('login', $data);
+    });
 });
+
+Route::get('/auth/logout', [AuthController::class, 'logout']);
 
 
 Route::middleware('admin.session')->group(function () {
@@ -98,6 +102,8 @@ Route::middleware('admin.session')->group(function () {
     Route::get('/admin/competency-standard/update/{id}', [CompetencyStandardController::class, 'adminupdatePage']);
     Route::post('/admin/competency-standard/update/{id}', [CompetencyStandardController::class, 'adminupdate']);
     Route::delete('/competency-standard/delete/{id}', [CompetencyStandardController::class, 'admindelete']);
+    Route::get('/admin/exam-results/report/{standardId}', [ExaminationController::class, 'fetchReport']);
+    Route::get('/admin/exam/report/{id}/excel', [ExcelController::class, 'exportReport']);
 
     Route::get('/admin/competency-standard/competency-elements/update/{cid}/{id}', [CompetencyElementController::class, 'adminupdatePage']);
     Route::post('/admin/competency-standard/competency-elements/update/{cid}/{id}', [CompetencyElementController::class, 'adminupdate']);
@@ -140,6 +146,7 @@ Route::middleware('assessor.session')->group(function () {
     //Assessor Profile Route
     Route::get('/assessor/me', [UserController::class, 'userAssessor']);
     Route::post('/assessor/me', [UserController::class, 'assessorProfileUpdate']);
+    Route::get('/assessor/update', [UserController::class, 'assessorUpdate']);
 
     //Assessment Route
     Route::get('/assesment', [ExaminationController::class, 'assessmenShow']);
@@ -154,6 +161,9 @@ Route::middleware('student.session')->group(function () {
 
     Route::get('/student/exam-result', [ExaminationController::class, 'resultStudent']);
     Route::get('/student/profile', [StudentController::class, 'studentProfile']);
+    Route::get('/student/profile/update', [StudentController::class, 'profileUpdate']);
+    Route::post('/student/profile/update', [StudentController::class, 'update']);
     Route::post('/exam-result/certificate', [CertificateController::class, 'generateCertificate']);
+
 });
 

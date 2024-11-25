@@ -22,6 +22,7 @@
 </head>
 
 <body>
+    @include('sweetalert::alert')
     <section class="vh-100">
         <div class="container py-5 h-100">
             <div class="row d-flex align-items-center justify-content-center h-100">
@@ -36,22 +37,21 @@
                         <h3>Sign In</h3>
                         <div data-mdb-input-init class="form-outline mb-4">
                             <input type="email" id="form1Example13" class="form-control form-control-lg"
-                                name="email" />
+                                name="email" @required(true) />
                             <label class="form-label" for="form1Example13">Email address</label>
                         </div>
 
                         <!-- Password input -->
                         <div data-mdb-input-init class="form-outline mb-4">
                             <input type="password" id="form1Example23" class="form-control form-control-lg"
-                                name="password" />
+                                name="password" @required(true)/>
                             <label class="form-label" for="form1Example23">Password</label>
                         </div>
 
                         <div class="d-flex justify-content-around align-items-center mb-4">
                             <!-- Checkbox -->
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="form1Example3"
-                                    checked />
+                                <input class="form-check-input" type="checkbox" id="form1Example3" name="remember"/>
                                 <label class="form-check-label" for="form1Example3"> Remember me </label>
                             </div>
                             <a href="#!">Forgot password?</a>
