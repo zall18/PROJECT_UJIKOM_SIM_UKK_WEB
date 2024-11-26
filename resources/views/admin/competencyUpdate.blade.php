@@ -30,7 +30,7 @@
                                         class="bx bx-buildings"></i></span>
                                 <input type="text" id="basic-icon-default-company" class="form-control"
                                     placeholder="CB00*, Etc" aria-label="CB00*, Etc" name="unit_code"
-                                    aria-describedby="basic-icon-default-company2" value="{{ $competency->unit_code }}" />
+                                    aria-describedby="basic-icon-default-company2" value="{{ $competency->unit_code }}" disabled/>
                             </div>
                         </div>
                         <div class="mb-3">

@@ -144,12 +144,19 @@ class CompetencyElementController extends Controller
     }
     public function admindelete(Request $request)
     {
-        CompetencyElement::where('id', $request->id)->delete();
+        $exam = Examination::where('element_id', $request->id)->get()->count();
 
-        Alert::success('Competency', 'Success to delete data!');
+        if ($exam > 0){
+            Alert::error('There are still related exam results', 'Failed to delete');
+            return back();
+        }else{
+            CompetencyElement::where('id', $request->id)->delete();
 
-        return redirect('/admin/competency-standard/detail/' . $request->cid);
+            Alert::success('Competency', 'Success to delete data!');
 
+            return redirect('/admin/competency-standard/detail/' . $request->cid);
+
+        }
     }
 
     //Show all competency standard from assessor that made the competency standard

@@ -127,10 +127,18 @@ class CompetencyStandardController extends Controller
     public function admindelete(Request $request)
     {
 
-        CompetencyElement::where('competency_standard_id', $request->id)->delete();
-        CompetencyStandard::where('id', $request->id)->delete();
-        Alert::success('Competency', 'Success to delete data!');
-        return redirect('/admin/competency-standard/managment');
+        $exam = Examination::where('standard_id', $request->id)->get()->count();
+
+        if ($exam > 0) {
+            Alert::error('There are still related exam results', 'Failed to delete');
+            return back();
+        } else {
+            CompetencyElement::where('competency_standard_id', $request->id)->delete();
+            CompetencyStandard::where('id', $request->id)->delete();
+            Alert::success('Competency', 'Success to delete data!');
+            return redirect('/admin/competency-standard/managment');
+
+        }
 
     }
 
@@ -178,7 +186,7 @@ class CompetencyStandardController extends Controller
     public function adminupdate(Request $request)
     {
         $validate = $request->validate([
-            'unit_code' => ['required', 'unique:competency_standards,unit_code'],
+            // 'unit_code' => ['required', 'unique:competency_standards,unit_code'],
             'unit_title' => ['required'],
             'unit_description' => ['required'],
             'major_id' => ['required', 'exists:majors,id'],
@@ -188,7 +196,7 @@ class CompetencyStandardController extends Controller
         if ($validate) {
 
             CompetencyStandard::where('id', $request->id)->update([
-                'unit_code' => strtoupper($request->unit_code),
+                // 'unit_code' => strtoupper($request->unit_code),
                 'unit_title' => $request->unit_title,
                 'unit_description' => $request->unit_description,
                 'major_id' => $request->major_id,

@@ -101,13 +101,21 @@
                 return response.json(); // Ubah respons ke JSON jika server mengirimkan JSON
             })
             .then(data => {
-                // Tampilkan pesan sukses atau lakukan sesuatu dengan respons
-                console.log('Form submitted successfully:', data);
-                alert('Changes saved successfully!');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Changes saved successfully!',
+                    confirmButtonText: 'OK'
+                });
             })
             .catch(error => {
                 console.error('Error submitting form:', error);
-                alert('Failed to save changes. Please try again.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'Failed to save changes. Please try again.',
+                    confirmButtonText: 'OK'
+                });
             });
         });
 
@@ -183,4 +191,6 @@
         }
 
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     @endsection

@@ -38,10 +38,7 @@ Route::middleware('guest')->group(function () {
         return view('login', $data);
     });
 });
-
 Route::get('/auth/logout', [AuthController::class, 'logout']);
-
-
 Route::middleware('admin.session')->group(function () {
 
     //Admin Dashboard Route
@@ -101,7 +98,7 @@ Route::middleware('admin.session')->group(function () {
     Route::get('/admin/competency-standard/detail/{id}', [CompetencyStandardController::class, 'admindetailPage']);
     Route::get('/admin/competency-standard/update/{id}', [CompetencyStandardController::class, 'adminupdatePage']);
     Route::post('/admin/competency-standard/update/{id}', [CompetencyStandardController::class, 'adminupdate']);
-    Route::delete('/competency-standard/delete/{id}', [CompetencyStandardController::class, 'admindelete']);
+    Route::delete('/admin/competency-standard/delete/{id}', [CompetencyStandardController::class, 'admindelete']);
     Route::get('/admin/exam-results/report/{standardId}', [ExaminationController::class, 'fetchReport']);
     Route::get('/admin/exam/report/{id}/excel', [ExcelController::class, 'exportReport']);
 

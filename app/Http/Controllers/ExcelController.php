@@ -8,12 +8,13 @@ use App\Models\Examination;
 use App\Models\Major;
 use App\Models\Student;
 use App\Models\User;
-use Auth;
+
 use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
 use Box\Spout\Writer\Common\Creator\Style\StyleBuilder;
 use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
-use Hash;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ExcelController extends Controller
@@ -31,7 +32,7 @@ class ExcelController extends Controller
             $totalElements = $standard->competency_elements_count;
             $completedElements = $exams->where('status', 1)->count(); // Menghitung elemen yang statusnya kompeten
             $finalScore = round(($completedElements / $totalElements) * 100);
-            $status = $finalScore >= 75 ? 'Competent' : 'Not Competent';
+            $status = $this->conversi($finalScore);
             $elementsStatus = $standard->competency_elements->sortBy('code')->map(function ($element) use ($exams) {
                 $exam = $exams->firstWhere('element_id', $element->id);
                 return [
@@ -54,6 +55,18 @@ class ExcelController extends Controller
         return $data;
     }
 
+    private function conversi($grade)
+    {
+        if ($grade >= 91 && $grade <= 100) {
+            return 'Very Competent';
+        } else if ($grade >= 75 && $grade <= 90) {
+            return 'Competent';
+        } else if ($grade >= 61 && $grade <= 74) {
+            return 'Quite Competent';
+        } else if ($grade <= 60) {
+            return 'Not Competent';
+        }
+    }
     public function exportReport(Request $request)
     {
         $data = $this->generateReportData($request);

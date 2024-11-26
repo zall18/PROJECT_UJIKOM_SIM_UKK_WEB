@@ -31,7 +31,18 @@ class StudentController extends Controller
         $data['majors'] = Major::all();
         return view('admin.studentImport', $data);
     }
-
+    private function conversi($grade)
+    {
+        if ($grade >= 91 && $grade <= 100) {
+            return 'Very Competent';
+        } else if ($grade >= 75 && $grade <= 90) {
+            return 'Competent';
+        } else if ($grade >= 61 && $grade <= 74) {
+            return 'Quite Competent';
+        } else if ($grade <= 60) {
+            return 'Not Competent';
+        }
+    }
 
 
     public function dashboard(Request $request)
@@ -56,7 +67,7 @@ class StudentController extends Controller
             // Hitung nilai akhir
             $finalScore = $totalElements > 0 ? round(($completedElements / $totalElements) * 100) : 0;
             // Tentukan status
-            $status = $finalScore >= 90 ? 'Competent' : 'Not Competent';
+            $status = $this->conversi($finalScore);
             return [
                 'unit_title' => $standard->unit_title,
                 'status' => $status,

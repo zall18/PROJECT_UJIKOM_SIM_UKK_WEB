@@ -5,11 +5,12 @@
         <div class="d-flex align-items-end row">
             <div class="col-sm-12">
                 <div class="card-body">
-                    <h5 class="card-title text-primary">{{ $competency->unit_title }}</h5>
-                    <p class="mb-1">
+                    <h5 class="card-title text-primary">Exam Result <span id="unit_title">{{ $competency->unit_title }}</span>
+                    </h5>
+                    <p class="mb-1" id="unit_code">
                         {{ $competency->unit_code }}
                     </p>
-                    <p class="mb-4">
+                    <p class="mb-4" id="unit_description">
                         {{ $competency->unit_description }}
                     </p>
                     <a href="/admin/competency-standard/delete/{{ $competency->id }}" class=""
@@ -70,7 +71,7 @@
 
 
     <div class="buy-now">
-        <a href="/competency-standard/competency-elements/{{ $competency->id }}" class="btn btn-danger btn-buy-now">Create
+        <a href="/admin/competency-standard/competency-elements/{{ $competency->id }}" class="btn btn-danger btn-buy-now">Create
             Another Competency Elements</a>
     </div>
 @endsection
