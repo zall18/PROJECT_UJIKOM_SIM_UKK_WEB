@@ -31,6 +31,7 @@
                         class="img-fluid" alt="Phone image">
                 </div>
                 <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+                    <h1>SIM UKK</h1>
                     <form action="/auth/login" method="post">
                         @csrf
                         <!-- Email input -->
@@ -44,14 +45,14 @@
                         <!-- Password input -->
                         <div data-mdb-input-init class="form-outline mb-4">
                             <input type="password" id="form1Example23" class="form-control form-control-lg"
-                                name="password" @required(true)/>
+                                name="password" @required(true) />
                             <label class="form-label" for="form1Example23">Password</label>
                         </div>
 
                         <div class="d-flex justify-content-around align-items-center mb-4">
                             <!-- Checkbox -->
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="form1Example3" name="remember"/>
+                                <input class="form-check-input" type="checkbox" id="form1Example3" name="remember" />
                                 <label class="form-check-label" for="form1Example3"> Remember me </label>
                             </div>
                             <a href="#!">Forgot password?</a>

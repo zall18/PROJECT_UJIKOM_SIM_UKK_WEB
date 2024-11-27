@@ -75,19 +75,12 @@
         </div>
     </div>
 
-    {{-- <script>
-        function submitForm() {
-        const form = document.getElementById('form-standar');
-        form.submit();
-        }
-    </script> --}}
     <script>
         function fetchExamResult(standardId) {
             fetch(`/exam-result/${standardId}`)
                 .then(response => response.json())
                 .then(data => {
-                    const tableBody = document.querySelector('#manage-table tbody');
-                    tableBody.innerHTML = ''; // Hapus isi tabel sebelumnya
+
 
                     const unit_code = document.getElementById("unit_code");
                     const unit_title = document.getElementById("unit_title");
@@ -102,8 +95,10 @@
                     unit_description.innerHTML = data.standard.unit_description;
 
                     const table = $('#manage-table').DataTable(); // Ambil instance DataTable
-                    table.destroy();
+                    table.clear().destroy();
 
+                    const tableBody = document.querySelector('#manage-table tbody');
+                    tableBody.innerHTML = ''; // Hapus isi tabel sebelumnya
 
                     // Perbarui isi tabel dengan data yang diterima
                     data.students.forEach((student, index) => {
@@ -117,9 +112,8 @@
                             </tr>
                         `;
                     });
+                    $('#manage-table').DataTable();
                 })
-
-                $('#manage-table').DataTable();
                 .catch(error => {
                     console.error('Error fetching exam results:', error);
                 });

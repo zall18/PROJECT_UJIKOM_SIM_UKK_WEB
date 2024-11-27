@@ -118,7 +118,7 @@
         <li class="menu-item">
             <a href="/exam-result" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-support"></i>
-                <div data-i18n="Support">Exam history</div>
+                <div data-i18n="Support">Exam Report</div>
             </a>
         </li>
     </ul>
