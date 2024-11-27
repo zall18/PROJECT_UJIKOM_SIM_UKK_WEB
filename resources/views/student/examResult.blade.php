@@ -26,16 +26,41 @@
                             <td>{{ $item['final_score'] }}</td>
                             <td>{{ $item['status'] }}</td>
                             <td>
-                                <form action="/exam-result/certificate" method="post"
-                                    @if ($item['final_score'] > 60) target="_blank" @endif>
-                                    @csrf
-                                    <input type="hidden" name="name" value="{{ Auth::user()->full_name }}">
-                                    <input type="hidden" name="program" value="{{ $item['unit_title'] }}">
-                                    <input type="hidden" name="final_score" value="{{ $item['final_score'] }}">
-                                    <input type="hidden" name="standard_id" value="{{ $item['standard_id'] }}">
-                                    {{-- @dd($item['standard_id']) --}}
-                                    <button class="btn btn-primary" type="submit">Generate</button>
-                                </form>
+                                <div class="dropdown">
+
+                                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">Generate</button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <form action="/exam-result/certificate/view" method="post"
+                                                class="dropdown-item mx-auto"
+                                                @if ($item['final_score'] > 60) target="_blank" @endif>
+                                                @csrf
+                                                <input type="hidden" name="name" value="{{ Auth::user()->full_name }}">
+                                                <input type="hidden" name="program" value="{{ $item['unit_title'] }}">
+                                                <input type="hidden" name="final_score" value="{{ $item['final_score'] }}">
+                                                <input type="hidden" name="standard_id" value="{{ $item['standard_id'] }}">
+                                                {{-- @dd($item['standard_id']) --}}
+                                                <button class="btn btn-primary" type="submit">View Certificate</button>
+                                            </form>
+                                        </li>
+                                        <li>
+                                            <form action="/exam-result/certificate/download" method="post"
+                                                class="dropdown-item">
+                                                @csrf
+                                                <input type="hidden" name="name" value="{{ Auth::user()->full_name }}">
+                                                <input type="hidden" name="program" value="{{ $item['unit_title'] }}">
+                                                <input type="hidden" name="final_score"
+                                                    value="{{ $item['final_score'] }}">
+                                                <input type="hidden" name="standard_id"
+                                                    value="{{ $item['standard_id'] }}">
+                                                {{-- @dd($item['standard_id']) --}}
+                                                <button class="btn btn-primary" type="submit">Download Certificate</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+
                             </td>
                         </tr>
                     @endforeach

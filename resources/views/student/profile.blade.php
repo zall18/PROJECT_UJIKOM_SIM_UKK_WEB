@@ -29,8 +29,9 @@
                                 <span id="basic-icon-default-company2" class="input-group-text"><i
                                         class='bx bx-user'></i></span>
                                 <input type="text" id="basic-icon-default-company" class="form-control"
-                                    placeholder="rizal, bla, bla" aria-label="rizal, bla, bla." name="full_name" value="{{ $user->full_name }}"
-                                    aria-describedby="basic-icon-default-company2" disabled />
+                                    placeholder="rizal, bla, bla" aria-label="rizal, bla, bla." name="full_name"
+                                    value="{{ $user->full_name }}" aria-describedby="basic-icon-default-company2"
+                                    disabled />
                             </div>
                         </div>
                         <div class="mb-3">
@@ -39,8 +40,8 @@
                                 <span id="basic-icon-default-company2" class="input-group-text"><i
                                         class='bx bx-user'></i></span>
                                 <input type="text" id="basic-icon-default-company" class="form-control"
-                                    placeholder="rizal, bla, bla" aria-label="rizal, bla, bla." name="username" value="{{ $user->username }}"
-                                    aria-describedby="basic-icon-default-company2" disabled />
+                                    placeholder="rizal, bla, bla" aria-label="rizal, bla, bla." name="username"
+                                    value="{{ $user->username }}" aria-describedby="basic-icon-default-company2" disabled />
                             </div>
                         </div>
                         <div class="mb-3">
@@ -49,18 +50,8 @@
                                 <span id="basic-icon-default-company2" class="input-group-text"><i
                                         class='bx bx-envelope'></i></span>
                                 <input type="text" id="basic-icon-default-company" class="form-control"
-                                    placeholder="user@example.com" aria-label="user@example.com" name="email" value="{{ $user->email }}"
-                                    aria-describedby="basic-icon-default-company2" disabled />
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="basic-icon-default-company">Password</label>
-                            <div class="input-group input-group-merge">
-                                <span id="basic-icon-default-company2" class="input-group-text"><i
-                                        class='bx bx-low-vision'></i></span>
-                                <input type="password" id="basic-icon-default-company" class="form-control"
-                                    placeholder="****" aria-label="****" name="password"
-                                    aria-describedby="basic-icon-default-company2" disabled />
+                                    placeholder="user@example.com" aria-label="user@example.com" name="email"
+                                    value="{{ $user->email }}" aria-describedby="basic-icon-default-company2" disabled />
                             </div>
                         </div>
                         <div class="mb-3">
@@ -73,54 +64,52 @@
                                     aria-describedby="basic-icon-default-company2" disabled />
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="basic-icon-default-company">Role</label>
-                            <select id="roleSelect" class="form-select" name="role" disabled>
-                                <option>Default select</option>
-                                <option value="student" {{ $user->role == 'student' ? 'selected' : '' }}>Student</option>
-                                <option value="admin"  {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
-                                <option value="assessor"  {{ $user->role == 'assessor' ? 'selected' : '' }}>Assessor</option>
-                            </select>
-                        </div>
                         <input type="hidden" name="role" value="{{ $user->role }}">
 
-                        @if ($user->role == "student")
-                        <div id="student-input">
-                            <div class="mb-3">
-                                <label class="form-label" for="basic-icon-default-company">Nisn</label>
-                                <div class="input-group input-group-merge">
-                                    <span id="basic-icon-default-company2" class="input-group-text"><i
-                                            class='bx bx-phone'></i></span>
-                                    <input type="text" id="basic-icon-default-company" class="form-control"
-                                        placeholder="0070****" aria-label="0070****" name="nisn" value="{{ $user->student->nisn }}"
-                                        aria-describedby="basic-icon-default-company2" disabled />
+                        @if ($user->role == 'student')
+                            <div id="student-input">
+                                <div class="mb-3">
+                                    <label class="form-label" for="basic-icon-default-company">Nisn</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="basic-icon-default-company2" class="input-group-text"><i
+                                                class='bx bx-phone'></i></span>
+                                        <input type="text" id="basic-icon-default-company" class="form-control"
+                                            placeholder="0070****" aria-label="0070****" name="nisn"
+                                            value="{{ $user->student->nisn }}"
+                                            aria-describedby="basic-icon-default-company2" disabled />
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="basic-icon-default-company">Grade Level</label>
+                                    <select id="defaultSelect" class="form-select" name="grade_level" disabled>
+                                        <option>Default select</option>
+                                        <option value="10" {{ $user->student->grade_level == '10' ? 'selected' : '' }}>
+                                            X</option>
+                                        <option value="11" {{ $user->student->grade_level == '11' ? 'selected' : '' }}>
+                                            XI</option>
+                                        <option value="12" {{ $user->student->grade_level == '12' ? 'selected' : '' }}>
+                                            XII</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="basic-icon-default-company">Major</label>
+                                    <select id="defaultSelect" class="form-select" name="major_id" disabled>
+                                        <option>Default select</option>
+                                        @foreach ($majors as $item)
+                                            <option value="{{ $item->id }}"
+                                                {{ $user->student->major_id == $item->id ? 'selected' : '' }}>
+                                                {{ $item->major_name }}</option>
+                                        @endforeach
+
+                                    </select>
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="basic-icon-default-company">Grade Level</label>
-                                <select id="defaultSelect" class="form-select" name="grade_level" disabled>
-                                    <option>Default select</option>
-                                    <option value="10" {{ $user->student->grade_level == '10' ? 'selected' : '' }}>X</option>
-                                    <option value="11" {{ $user->student->grade_level == '11' ? 'selected' : '' }}>XI</option>
-                                    <option value="12"  {{ $user->student->grade_level == '12' ? 'selected' : '' }}>XII</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="basic-icon-default-company">Major</label>
-                                <select id="defaultSelect" class="form-select" name="major_id" disabled>
-                                    <option>Default select</option>
-                                    @foreach ($majors as $item)
-                                        <option value="{{ $item->id }}"  {{ $user->student->major_id == $item->id ? 'selected' : '' }}>{{ $item->major_name }}</option>
-                                    @endforeach
-
-                                </select>
-                            </div>
-                        </div>
                         @endif
 
 
                     </form>
-                    <a href="/student/profile/update"><button class="btn btn-primary w-100">Update Your Profile</button></a>
+                    <a href="/student/profile/update"><button class="btn btn-primary w-100">Update Your
+                            Profile</button></a>
                 </div>
             </div>
         </div>

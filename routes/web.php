@@ -34,7 +34,7 @@ Route::fallback(function () {
     return view('404');
 });
 
-Route::get('/back', function() {
+Route::get('/back', function () {
     return back();
 });
 
@@ -168,7 +168,8 @@ Route::middleware('student.session')->group(function () {
     Route::get('/student/profile', [StudentController::class, 'studentProfile']);
     Route::get('/student/profile/update', [StudentController::class, 'profileUpdate']);
     Route::post('/student/profile/update', [StudentController::class, 'update']);
-    Route::post('/exam-result/certificate', [CertificateController::class, 'generateCertificate']);
+    Route::post('/exam-result/certificate/download', [CertificateController::class, 'generateCertificateDownload']);
+    Route::post('/exam-result/certificate/view', [CertificateController::class, 'generateCertificateView']);
 
 });
 

@@ -29,8 +29,9 @@
                                 <span id="basic-icon-default-company2" class="input-group-text"><i
                                         class='bx bx-user'></i></span>
                                 <input type="text" id="basic-icon-default-company" class="form-control"
-                                    placeholder="rizal, bla, bla" aria-label="rizal, bla, bla." name="full_name" value="{{ $user->full_name }}"
-                                    aria-describedby="basic-icon-default-company2" disabled/>
+                                    placeholder="rizal, bla, bla" aria-label="rizal, bla, bla." name="full_name"
+                                    value="{{ $user->full_name }}" aria-describedby="basic-icon-default-company2"
+                                    disabled />
                             </div>
                         </div>
                         <div class="mb-3">
@@ -39,8 +40,8 @@
                                 <span id="basic-icon-default-company2" class="input-group-text"><i
                                         class='bx bx-user'></i></span>
                                 <input type="text" id="basic-icon-default-company" class="form-control"
-                                    placeholder="rizal, bla, bla" aria-label="rizal, bla, bla." name="username" value="{{ $user->username }}"
-                                aria-describedby="basic-icon-default-company2"/>
+                                    placeholder="rizal, bla, bla" aria-label="rizal, bla, bla." name="username"
+                                    value="{{ $user->username }}" aria-describedby="basic-icon-default-company2" />
                             </div>
                         </div>
                         <div class="mb-3">
@@ -49,8 +50,8 @@
                                 <span id="basic-icon-default-company2" class="input-group-text"><i
                                         class='bx bx-envelope'></i></span>
                                 <input type="text" id="basic-icon-default-company" class="form-control"
-                                    placeholder="user@example.com" aria-label="user@example.com" name="email" value="{{ $user->email }}"
-                                    aria-describedby="basic-icon-default-company2"/>
+                                    placeholder="user@example.com" aria-label="user@example.com" name="email"
+                                    value="{{ $user->email }}" aria-describedby="basic-icon-default-company2" />
                             </div>
                         </div>
                         <div class="mb-3">
@@ -60,7 +61,7 @@
                                         class='bx bx-low-vision'></i></span>
                                 <input type="password" id="basic-icon-default-company" class="form-control"
                                     placeholder="****" aria-label="****" name="password"
-                                    aria-describedby="basic-icon-default-company2"/>
+                                    aria-describedby="basic-icon-default-company2" />
                             </div>
                         </div>
                         <div class="mb-3">
@@ -70,7 +71,7 @@
                                         class='bx bx-phone'></i></span>
                                 <input type="text" id="basic-icon-default-company" class="form-control"
                                     placeholder="087*****" aria-label="087*****" name="phone" value="{{ $user->phone }}"
-                                    aria-describedby="basic-icon-default-company2"/>
+                                    aria-describedby="basic-icon-default-company2" />
                             </div>
                         </div>
                         <input type="hidden" name="role" value="{{ $user->role }}">
@@ -79,8 +80,12 @@
                                 <label class="form-label" for="basic-icon-default-company">Assessor Type</label>
                                 <select id="defaultSelect" class="form-select" name="assessor_type" disabled>
                                     <option>Default select</option>
-                                    <option value="internal" {{ $user->assessor->assessor_type == 'internal' ? 'selected' : '' }}>Internal</option>
-                                    <option value="external" {{ $user->assessor->assessor_type == 'internal' ? 'selected' : '' }}>External</option>
+                                    <option value="internal"
+                                        {{ $user->assessor->assessor_type == 'internal' ? 'selected' : '' }}>Internal
+                                    </option>
+                                    <option value="external"
+                                        {{ $user->assessor->assessor_type == 'external' ? 'selected' : '' }}>External
+                                    </option>
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -89,8 +94,9 @@
                                     <span id="basic-icon-default-company2" class="input-group-text"><i
                                             class='bx bx-phone'></i></span>
                                     <input type="text" id="basic-icon-default-company" class="form-control"
-                                        placeholder="SMK YPC TASIK, PT. bla, Etc" aria-label="SMK YPC TASIK, PT. bla, Etc" value="{{ $user->assessor->description }}"
-                                        name="description" aria-describedby="basic-icon-default-company2" disabled/>
+                                        placeholder="SMK YPC TASIK, PT. bla, Etc" aria-label="SMK YPC TASIK, PT. bla, Etc"
+                                        value="{{ $user->assessor->description }}" name="description"
+                                        aria-describedby="basic-icon-default-company2" disabled />
                                 </div>
                             </div>
                         </div>
