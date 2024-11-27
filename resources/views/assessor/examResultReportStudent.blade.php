@@ -4,7 +4,8 @@
 
     <style>
         .table td {
-            white-space: nowrap;
+            white-space: normal;
+            word-wrap: break-word;
             overflow: hidden;
             text-overflow: ellipsis;
             max-width: 150px; /* Sesuaikan dengan kebutuhan */
@@ -20,8 +21,7 @@
         <div class="d-flex align-items-end row">
             <div class="col-sm-12">
                 <div class="card-body">
-                    <h5 class="card-title text-primary">Exam Result <span id="unit_title">{{ $standard->unit_title }}</span>
-                    </h5>
+                    <h5 class="card-title text-primary">Exam Result <span id="unit_title">{{ $standard->unit_title }}</span></h5>
                     <p class="mb-1" id="unit_code">
                         {{ $standard->unit_code }}
                     </p>
@@ -43,6 +43,7 @@
             </div>
         </div>
     </div>
+
     <div class="card mt-3">
         <h5 class="card-header">Table Exam Result</h5>
         <div class="table-responsive" style="overflow-x: auto;">
@@ -70,147 +71,171 @@
                                 </span>
                             </td>
                             <td>
-                                <button class="btn btn-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#details-{{ $index }}">
+                                <!-- Change this to trigger modal -->
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal-{{ $index }}">
                                     View Details
                                 </button>
                             </td>
                         </tr>
-                        <tr id="details-{{ $index }}" class="collapse">
-                            <td colspan="6">
-                                <div class="table-responsive" style="overflow-x: auto;">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                @foreach ($elements as $item)
-                                                    <th>{{ $item->criteria }}</th>
-                                                @endforeach
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                @foreach ($student['elements'] as $item)
-                                                    <td>
-                                                        <span class="badge {{ $item['status'] === 'Competent' ? 'bg-success' : 'bg-danger' }}">
-                                                            {{ $item['status'] }}
-                                                        </span>
-                                                    </td>
-                                                @endforeach
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </td>
-                        </tr>
+                    {{-- <p>{{ $index }}</p> --}}
+
                     @endforeach
                 </tbody>
             </table>
         </div>
-
     </div>
+
+    <!-- Modal structure -->
+    <div id="modal-data">
+        @foreach ($students as $index => $student)
+        <div class="modal fade" id="detailsModal-{{ $index }}" tabindex="-1" aria-labelledby="detailsModalLabel-{{ $index }}" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="detailsModalLabel-{{ $index }}">Student: {{ $student['student_name'] }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Criteria</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($student['elements'] as $index => $item)
+                                    <tr>
+                                        <td>{{ $index }}</td>
+                                        <td>{{ $elements[$index]->criteria }}</td>
+                                        <td><span class="badge {{ $item['status'] === 'Competent' ? 'bg-success' : 'bg-danger' }}">{{ $item['status'] }}</span></td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+    </div>
+
+
 
     <script>
         function fetchExamResultReport(standardId) {
-            // Kirim request menggunakan Fetch API
             fetch(`/admin/exam-results/report/${standardId}`, {
                 method: 'GET',
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
             })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Fetched data:', data);
+            .then(response => response.json())
+            .then(data => {
+                if (!data || !data.students) {
+                    console.error('Invalid or empty data');
+                    return;
+                }
 
-                    // Update unit details
-                    document.getElementById("unit_code").innerText = data.standard.unit_code;
-                    document.getElementById("unit_title").innerText = data.standard.unit_title;
-                    document.getElementById("unit_description").innerText = data.standard.unit_description;
+                // Update unit details
+                document.getElementById("unit_code").innerText = data.standard.unit_code;
+                document.getElementById("unit_title").innerText = data.standard.unit_title;
+                document.getElementById("unit_description").innerText = data.standard.unit_description;
 
-                    // Reinitialize DataTable
-                    const table = $('#manage-table').DataTable();
-                    table.destroy();
+                // Check if DataTable is initialized
+                if ($.fn.dataTable.isDataTable('#manage-table')) {
+                    $('#manage-table').DataTable().clear().destroy();
+                }
 
-                    // Update table header
-                    const tableHeader = document.querySelector('#manage-table thead');
-                    tableHeader.innerHTML = `
-                        <tr>
-                            <th>#</th>
-                            <th>Student Full Name</th>
-                            <th>Student NISN</th>
-                            <th>Final Score (%)</th>
-                            <th>Competency Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    `;
+                const tableBody = document.querySelector('#manage-table tbody');
+    tableBody.innerHTML = ''; // Clear previous content
 
-                    // Update table body
-                    const tableBody = document.querySelector('#manage-table tbody');
-                    tableBody.innerHTML = ''; // Bersihkan konten sebelumnya
+    // Clear modal data
+    const modaldata = document.getElementById("modal-data");
+    modaldata.innerHTML = ''; // Clear existing modals
 
-                    const studentsArray = Object.values(data.students);
-                    studentsArray.forEach((student, index) => {
-                        // Tambahkan baris utama
-                        const mainRow = `
-                            <tr>
-                                <td>${index + 1}</td>
-                                <td>${student.student_name}</td>
-                                <td>${student.student_nisn}</td>
-                                <td>${student.final_score.toFixed(2)}%</td>
-                                <td>
-                                    <span class="badge ${student.status === 'Passed' ? 'bg-success' : 'bg-danger'}">
-                                        ${student.status}
-                                    </span>
-                                </td>
-                                <td>
-                                    <button class="btn btn-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#details-${index}">
-                                        View Details
-                                    </button>
-                                </td>
-                            </tr>
-                        `;
+    // Prepare new rows with dynamic data
+    const studentArray = Object.values(data.students);
+    studentArray.forEach((student, index) => {
+        // Insert a row for each student
+        const mainRow = `
+            <tr>
+                <td>${index + 1}</td>
+                <td>${student.student_name}</td>
+                <td>${student.student_nisn}</td>
+                <td>${student.final_score.toFixed(2)}%</td>
+                <td>
+                    <span class="badge ${student.status === 'Competent' ? 'bg-success' : 'bg-danger'}">
+                        ${student.status}
+                    </span>
+                </td>
+                <td>
+                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal-${index}">
+                        View Details
+                    </button>
+                </td>
+            </tr>
+        `;
+        tableBody.innerHTML += mainRow;
 
-                        // Tambahkan baris detail
-                        const detailRow = `
-                            <tr id="details-${index}" class="collapse">
-                                <td colspan="6">
-                                    <div class="table-responsive" style="overflow-x: auto;">
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    ${data.elements.map(el => `<th>${el.criteria}</th>`).join('')}
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    ${student.elements.map(el => `
-                                                        <td>
-                                                            <span class="badge ${el.status === 'Passed' ? 'bg-success' : 'bg-danger'}">
-                                                                ${el.status}
-                                                            </span>
-                                                        </td>
-                                                    `).join('')}
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </td>
-                            </tr>
-                        `;
+        // Generate modal for each student
+        const modalHtml = `
+            <div class="modal fade" id="detailsModal-${index}" tabindex="-1" aria-labelledby="detailsModalLabel-${index}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="detailsModalLabel-${index}">Student: ${student.student_name}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Criteria</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${student.elements.map((item, elementIndex) => {
+                                        return `
+                                            <tr>
+                                                <td>${elementIndex + 1}</td>
+                                                <td>${item.criteria}</td>
+                                                <td>
+                                                    <span class="badge ${item.status === 'Competent' ? 'bg-success' : 'bg-danger'}">
+                                                        ${item.status}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        `;
+                                    }).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        modaldata.innerHTML += modalHtml; // Append modal to the modal-data div
+    });
 
-                        // Tambahkan baris utama dan detail ke body tabel
-                        tableBody.innerHTML += mainRow + detailRow;
-                    });
+    // Re-initialize the DataTable with the new data
+    $('#manage-table').DataTable();
 
-                    // Reinitialize DataTable
-                    $('#manage-table').DataTable();
-
-
-                    // Update export link
-                    const exportLink = document.getElementById("exportToExcelLink");
-                    exportLink.href = `/admin/exam/report/${data.standard.id}/excel`;
-                })
-                .catch(error => console.error('Error:', error));
+    // Update export link
+    document.getElementById("exportToExcelLink").href = `/admin/exam/report/${data.standard.id}/excel`;
+            })
+            .catch(error => console.error('Error:', error));
         }
-
     </script>
+
+
 @endsection
