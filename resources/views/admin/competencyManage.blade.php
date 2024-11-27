@@ -14,6 +14,7 @@
                         <th>Unit Code</th>
                         <th>Unit Title</th>
                         <th>Unit Description</th>
+                        <th>Assessor</th>
                         <th>Major</th>
                         <th>Actions</th>
                     </tr>
@@ -28,6 +29,7 @@
                                 {{ $item->unit_title }}
                             </td>
                             <td>{{ $item->unit_description }}</td>
+                            <td>{{ $item->assessor->user->full_name }}</td>
                             <td>{{ $item->major->major_name }}</td>
                             <td>
                                 <div class="dropdown">

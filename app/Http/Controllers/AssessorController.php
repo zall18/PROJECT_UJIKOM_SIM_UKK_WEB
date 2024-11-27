@@ -10,7 +10,7 @@ class AssessorController extends Controller
     //Show all Assessor
     public function index()
     {
-        $data['assessors'] = Assessor::all();
+        $data['assessors'] = Assessor::with('user')->get();
         $data['active'] = 'assessor';
         return view('admin.assessorManage', $data);
     }

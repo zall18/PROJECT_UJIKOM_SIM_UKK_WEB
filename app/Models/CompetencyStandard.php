@@ -25,4 +25,9 @@ class CompetencyStandard extends Model
     {
         return $this->hasMany(Examination::class);
     }
+
+    public function assessor()
+    {
+        return $this->belongsTo(Assessor::class);
+    }
 }

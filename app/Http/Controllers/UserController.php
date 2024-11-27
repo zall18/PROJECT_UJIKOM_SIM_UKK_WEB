@@ -138,7 +138,7 @@ class UserController extends Controller
             'username' => ['required'],
             'email' => ['required', 'email'],
             'phone' => ['required'],
-            'role' => ['required|in:admin, assessor, student']
+            'role' => ['required']
         ]);
 
         if ($validate) {
@@ -204,7 +204,7 @@ class UserController extends Controller
                     'role' => "admin",
                     'is_active' => 1
                 ]);
-                return redirect('/user/managment');
+                return back();
             }
         }
     }

@@ -101,6 +101,9 @@
                     unit_title.innerHTML = data.standard.unit_title;
                     unit_description.innerHTML = data.standard.unit_description;
 
+                    const table = $('#manage-table').DataTable(); // Ambil instance DataTable
+                    table.destroy();
+
 
                     // Perbarui isi tabel dengan data yang diterima
                     data.students.forEach((student, index) => {
@@ -115,6 +118,8 @@
                         `;
                     });
                 })
+
+                $('#manage-table').DataTable();
                 .catch(error => {
                     console.error('Error fetching exam results:', error);
                 });

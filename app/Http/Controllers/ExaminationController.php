@@ -101,7 +101,7 @@ class ExaminationController extends Controller
             $elementsStatus = $standard->competency_elements->sortBy('code')->map(function ($element) use ($exams) {
                 $exam = $exams->firstWhere('element_id', $element->id);
                 return [
-                    'status' => $exam ? ($exam->status == 1 ? 'Kompeten' : 'Belum Kompeten') : 'Belum Dinilai',
+                    'status' => $exam ? ($exam->status == 1 ? 'Competent' : 'Not Competent') : 'Belum Dinilai',
                     'comments' => $exam ? $exam->comments : '-'
                 ];
             });
@@ -171,7 +171,7 @@ class ExaminationController extends Controller
             $elementsStatus = $standard->competency_elements->sortBy('code')->map(function ($element) use ($exams) {
                 $exam = $exams->firstWhere('element_id', $element->id);
                 return [
-                    'status' => $exam ? ($exam->status == 1 ? 'Kompeten' : 'Belum Kompeten') : 'Belum Dinilai',
+                    'status' => $exam ? ($exam->status == 1 ? 'Competent' : 'Not Competent') : 'Belum Dinilai',
                     'comments' => $exam ? $exam->comments : '-'
                 ];
             });

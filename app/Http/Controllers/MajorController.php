@@ -105,7 +105,7 @@ class MajorController extends Controller
     //Show all student from the major
     public function mstudent(Request $request)
     {
-        $data['students'] = Student::where('major_id', $request->id)->get();
+        $data['students'] = Student::where('major_id', $request->id)->with('user')->get();
         $data['active'] = 'ms';
         return view('admin.majorStudentTable', $data);
     }
