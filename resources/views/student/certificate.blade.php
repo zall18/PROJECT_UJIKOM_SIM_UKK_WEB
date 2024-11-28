@@ -137,6 +137,7 @@
 
 <body>
     <div class="certificate-container text-center">
+        {{-- <img src="{{ asset('images/smkypc.png') }}" alt="" srcset=""> --}}
         <h1 class="certificate-title">Certificate of Achievement</h1>
         <p class="certificate-body">This is to certify that</p>
         <div class="certificate-name">{{ $name }}</div>

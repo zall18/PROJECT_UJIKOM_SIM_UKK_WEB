@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CompetencyElement;
 use App\Models\CompetencyStandard;
 use App\Models\Examination;
+use App\Models\StandardAssessor;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -88,7 +89,7 @@ class ExaminationController extends Controller
     {
         $data['elements'] = CompetencyElement::where('competency_standard_id', $request->id)->get();
         $data['standard'] = CompetencyStandard::where('id', $request->id)->first();
-        $data['standards'] = CompetencyStandard::with('major')->where('assessor_id', Auth::user()->assessor->id)->get();
+        $data['standards'] = StandardAssessor::where('assessor_id', Auth::user()->assessor->id)->get();
         $data['active'] = 'examResultReport';
         $standard = CompetencyStandard::where('id', $request->id)->withCount('competency_elements')->first();
         // Mendapatkan data ujian murid berdasarkan standard yang dipilih
@@ -107,9 +108,11 @@ class ExaminationController extends Controller
             });
 
             return [
-                'student_id' => $exams->first()->id,
+                'student_id' => $exams->first()->student->id,
                 'student_nisn' => $exams->first()->student->nisn,
                 'student_name' => $exams->first()->student->user->full_name,
+                'unit_title' => $standard->unit_title,
+                'standard_id' => $standard->id,
                 'elements' => $elementsStatus,
                 'final_score' => $finalScore,
                 'status' => $status
@@ -140,12 +143,14 @@ class ExaminationController extends Controller
             });
 
             return [
-                'student_id' => $exams->first()->student_id,
+                'student_id' => $exams->first()->student->id,
                 'student_nisn' => $exams->first()->student->nisn,
                 'student_name' => $exams->first()->student->user->full_name,
+                'unit_title' => $standard->unit_title,
+                'standard_id' => $standard->id,
                 'elements' => $elementsStatus,
                 'final_score' => $finalScore,
-                'status' => $status,
+                'status' => $status
             ];
         });
 
@@ -175,11 +180,13 @@ class ExaminationController extends Controller
                     'comments' => $exam ? $exam->comments : '-'
                 ];
             });
-
+// dd($exams->first()->student->id);
             return [
                 'student_id' => $exams->first()->student->id,
                 'student_nisn' => $exams->first()->student->nisn,
                 'student_name' => $exams->first()->student->user->full_name,
+                'unit_title' => $standard->unit_title,
+                'standard_id' => $standard->id,
                 'elements' => $elementsStatus,
                 'final_score' => $finalScore,
                 'status' => $status
@@ -202,7 +209,9 @@ class ExaminationController extends Controller
     {
         $standard = CompetencyStandard::where('id', $request->id)->first();
         $data['standard'] = $standard;
-        $data['students'] = Student::where('major_id', $standard->major_id)->get();
+        $data['students'] = Student::where('major_id', $standard->major_id)->whereHas('user', function ($query) {
+            $query->where('is_active', 1);
+        })->get();
         $data['active'] = 'student';
         return view('assessor.assessmentStudent', $data);
     }

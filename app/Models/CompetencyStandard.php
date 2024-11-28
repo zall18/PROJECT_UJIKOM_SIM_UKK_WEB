@@ -13,7 +13,7 @@ class CompetencyStandard extends Model
 
     public function major()
     {
-        return $this->belongsTo(Major::class);
+        return $this->belongsTo(Major::class, 'major_id');
     }
 
     public function competency_elements()
@@ -29,5 +29,10 @@ class CompetencyStandard extends Model
     public function assessor()
     {
         return $this->belongsTo(Assessor::class);
+    }
+
+    public function standardAssessor()
+    {
+        return $this->belongsToMany(Assessor::class, 'standard_assessors', 'competency_standard_id', 'assessor_id');
     }
 }

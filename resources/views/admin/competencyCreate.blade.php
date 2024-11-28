@@ -69,6 +69,15 @@
                                     <option value="{{ $item->id }}">{{ $item->user->full_name }}</option>
                                 @endforeach
                             </select>
+                            {{-- <label class="form-label" for="assessor">Assessor</label>
+                            @foreach ($assessors as $item)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="assessor[]" id="assessor{{ $item->id }}" value="{{ $item->id }}">
+                                    <label class="form-check-label" for="assessor{{ $item->id }}">
+                                        {{ $item->user->full_name }}
+                                    </label>
+                                </div>
+                            @endforeach --}}
                         </div>
                         <button type="submit" class="btn btn-primary">Send</button>
                     </form>

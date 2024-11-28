@@ -74,6 +74,14 @@
                             </div>
                         </div>
                         <div class="mb-3">
+                            <label class="form-label" for="basic-icon-default-company">Is Active</label>
+                            <select id="roleSelect" class="form-select" name="is_active">
+                                <option>Default select</option>
+                                <option value="1" {{ $user->is_active == '1' ? 'selected' : '' }}>Active</option>
+                                <option value="0" {{ $user->is_active == '0' ? 'selected' : '' }}>Not Active</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
                             <label class="form-label" for="basic-icon-default-company">Role</label>
                             <select id="roleSelect" class="form-select" name="role" disabled>
                                 <option>Default select</option>

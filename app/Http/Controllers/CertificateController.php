@@ -12,6 +12,7 @@ class CertificateController extends Controller
 {
     public function generateCertificateView(Request $request)
     {
+        // dd($request->all());
         if ($request->final_score > 60) {
             // Data yang akan diteruskan ke view
             // dd($request->input('standard_id'));
@@ -20,7 +21,7 @@ class CertificateController extends Controller
                 'program' => $request->input('program', 'Laravel Mastery Program'),
                 'final_score' => $request->input('final_score', '0'),
                 'date' => now()->format('F d, Y'),
-                'elements' => Examination::where('standard_id', $request->input('standard_id'))->where('student_id', Auth::user()->student->id)->get()
+                'elements' => Examination::where('standard_id', $request->input('standard_id'))->where('student_id', $request->input('student_id'))->get()
             ];
 
             // Render PDF
@@ -44,14 +45,14 @@ class CertificateController extends Controller
                 'program' => $request->input('program', 'Laravel Mastery Program'),
                 'final_score' => $request->input('final_score', '0'),
                 'date' => now()->format('F d, Y'),
-                'elements' => Examination::where('standard_id', $request->input('standard_id'))->where('student_id', Auth::user()->student->id)->get()
+                'elements' => Examination::where('standard_id', $request->input('standard_id'))->where('student_id', $request->input('student_id'))->get()
             ];
 
             // Render PDF
             $pdf = Pdf::loadView('student.certificate', $data)->setPaper('a4', 'landscape');
 
             // Simpan atau tampilkan
-            return $pdf->download($request->program . ' Certificate.pdf'); // Untuk download
+            return $pdf->download($request->name. " - ". $request->program . ' Certificate.pdf'); // Untuk download
             // return $pdf->stream(); // Untuk ditampilkan di browser
         } else {
             Alert::error('Failed to generate certificate', 'You final score must upper 60');

@@ -23,12 +23,12 @@
                         <tr>
                             <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{ $index + 1 }}</strong>
                             </td>
-                            <td>{{ $item->unit_code }}</td>
+                            <td>{{ $item->competencyStandard->unit_code }}</td>
                             <td>
-                                {{ $item->unit_title }}
+                                {{ $item->competencyStandard->unit_title }}
                             </td>
-                            <td>{{ $item->unit_description }}</td>
-                            <td>{{ $item->major->major_name }}</td>
+                            <td>{{ $item->competencyStandard->unit_description }}</td>
+                            <td>{{ $item->competencyStandard->major->major_name }}</td>
                             <td>
                                 <div class="dropdown">
                                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
@@ -36,7 +36,7 @@
                                         <i class="bx bx-dots-vertical-rounded"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="/competency-standard/detail/{{ $item->id }}"><i
+                                        <a class="dropdown-item" href="/competency-standard/detail/{{ $item->competencyStandard->id }}"><i
                                                 class='bx bx-search-alt-2'></i>
                                             View</a>
                                     </div>

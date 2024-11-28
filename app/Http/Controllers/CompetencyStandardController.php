@@ -8,6 +8,7 @@ use App\Models\CompetencyElement;
 use App\Models\CompetencyStandard;
 use App\Models\Examination;
 use App\Models\Major;
+use App\Models\StandardAssessor;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +19,7 @@ class CompetencyStandardController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data['competencies'] = CompetencyStandard::where('assessor_id', $user->assessor->id)->get();
+        $data['competencies'] = StandardAssessor::where('assessor_id', $user->assessor->id)->with('competencyStandard')->get();
         $data['active'] = 'competency';
         return view('assessor.competencyManage', $data);
     }
@@ -67,20 +68,30 @@ class CompetencyStandardController extends Controller
             'unit_title' => ['required'],
             'unit_description' => ['required'],
             'major_id' => ['required', 'exists:majors,id'],
-            'assessor_id' => ['required', 'exists:assessors,id']
+            // 'assessor' => ['required']
         ]);
 
         if ($validate) {
 
-            $id = CompetencyStandard::create([
+            $standard = CompetencyStandard::create([
                 'unit_code' => strtoupper($request->unit_code),
                 'unit_title' => $request->unit_title,
                 'unit_description' => $request->unit_description,
                 'major_id' => $request->major_id,
-                'assessor_id' => $request->assessor_id
-            ])->id;
+            ]);
+
+            $id = $standard->id;
+
+            // $assessors = $request->assessor;
+            // foreach ($assessors as $item) {
+            //     StandardAssessor::create([
+            //         'competency_standard_id' => $id,
+            //         'assessor_id' => $item,
+            //     ]);
+            // }
 
             return redirect('/admin/competency-standard/competency-elements/' . $id);
+
         }
     }
 

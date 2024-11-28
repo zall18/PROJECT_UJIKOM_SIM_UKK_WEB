@@ -14,6 +14,7 @@ use App\Http\Middleware\admin;
 use App\Models\Assessor;
 use App\Models\CompetencyElement;
 use App\Models\CompetencyStandard;
+use App\Models\StandardAssessor;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -119,7 +120,7 @@ Route::middleware('assessor.session')->group(function () {
     //Assessor Dashboard Route
     Route::get('/assessor/dashboard', function () {
         $data['active'] = 'dashboard';
-        $data['competency_count'] = CompetencyStandard::where('assessor_id', Auth::user()->assessor->id)->get()->count();
+        $data['competency_count'] = StandardAssessor::where('assessor_id', Auth::user()->assessor->id)->get()->count();
         $data['student_count'] = Student::all()->count();
         return view('assessor.dashboard', $data);
     });
@@ -168,8 +169,8 @@ Route::middleware('student.session')->group(function () {
     Route::get('/student/profile', [StudentController::class, 'studentProfile']);
     Route::get('/student/profile/update', [StudentController::class, 'profileUpdate']);
     Route::post('/student/profile/update', [StudentController::class, 'update']);
-    Route::post('/exam-result/certificate/download', [CertificateController::class, 'generateCertificateDownload']);
-    Route::post('/exam-result/certificate/view', [CertificateController::class, 'generateCertificateView']);
 
 });
+Route::post('/exam-result/certificate/download', [CertificateController::class, 'generateCertificateDownload']);
+Route::post('/exam-result/certificate/view', [CertificateController::class, 'generateCertificateView']);
 

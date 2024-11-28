@@ -37,7 +37,7 @@
                         @endforeach
                     </select>
 
-                    <a href="/exam/report/{{ $standard->id }}/excel" id="exportToExcelLink">
+                    <a href="/admin/exam/report/{{ $standard->id }}/excel" id="exportToExcelLink">
                         <button class="btn btn-success w-100 mt-2">Export to Excel</button>
                     </a>
                 </div>
@@ -57,6 +57,7 @@
                         <th>Final Score (%)</th>
                         <th>Competency Status</th>
                         <th>Actions</th>
+                        <th>Certificate</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -72,6 +73,7 @@
                                     {{ $student['status'] }}
                                 </span>
                             </td>
+
                             <td>
                                 <!-- Change this to trigger modal -->
                                 <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
@@ -79,8 +81,45 @@
                                     View Details
                                 </button>
                             </td>
+                            <td>
+                                <div class="dropdown">
+
+                                    <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">Generate</button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <form action="/exam-result/certificate/view" method="post"
+                                                class="dropdown-item mx-auto"
+                                                @if ($student['final_score'] > 60) target="_blank" @endif>
+                                                @csrf
+                                                <input type="hidden" name="name" value="{{ $student['student_name'] }}">
+                                                <input type="hidden" name="program" value="{{ $student['unit_title'] }}">
+                                                <input type="hidden" name="student_id" value="{{ $student['student_id'] }}">
+                                                <input type="hidden" name="final_score" value="{{ $student['final_score'] }}">
+                                                <input type="hidden" name="standard_id" value="{{ $student['standard_id'] }}">
+                                                {{-- @dd($item['standard_id']) --}}
+                                                <button class="btn btn-primary btn-sm" type="submit">View Certificate</button>
+                                            </form>
+                                        </li>
+                                        <li>
+                                            <form action="/exam-result/certificate/download" method="post"
+                                                class="dropdown-item">
+                                                @csrf
+                                                <input type="hidden" name="name" value="{{ $student['student_name'] }}">
+                                                <input type="hidden" name="program" value="{{ $student['unit_title'] }}">
+                                                <input type="hidden" name="student_id" value="{{ $student['student_id'] }}">
+                                                <input type="hidden" name="final_score" value="{{ $student['final_score'] }}">
+                                                <input type="hidden" name="standard_id" value="{{ $student['standard_id'] }}">
+                                                {{-- @dd($item['standard_id']) --}}
+                                                <button class="btn btn-primary btn-sm" type="submit">Download Certificate</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </td>
                         </tr>
-                        {{-- <p>{{ $index }}</p> --}}
+                        {{-- {{-- <p>{{ $index }}</p> --}}
                     @endforeach
                 </tbody>
             </table>
@@ -184,6 +223,38 @@
                         View Details
                     </button>
                 </td>
+                <td>
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Generate
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <form action="/exam-result/certificate/view" method="post" class="dropdown-item mx-auto"
+                                            ${student.final_score > 60 ? 'target="_blank"' : ''}>
+                                            @csrf
+                                            <input type="hidden" name="name" value="${student.student_name}">
+                                            <input type="hidden" name="program" value="${data.standard.unit_title}">
+                                            <input type="hidden" name="student_id" value="${student.student_id}">
+                                            <input type="hidden" name="final_score" value="${student.final_score}">
+                                            <input type="hidden" name="standard_id" value="${data.standard.id}">
+                                            <button class="btn btn-primary btn-sm" type="submit">View Certificate</button>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <form action="/exam-result/certificate/download" method="post" class="dropdown-item">
+                                            @csrf
+                                            <input type="hidden" name="name" value="${student.student_name}">
+                                            <input type="hidden" name="program" value="${data.standard.unit_title}">
+                                            <input type="hidden" name="student_id" value="${student.student_id}">
+                                            <input type="hidden" name="final_score" value="${student.final_score}">
+                                            <input type="hidden" name="standard_id" value="${data.standard.id}">
+                                            <button class="btn btn-primary btn-sm" type="submit">Download Certificate</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
             </tr>
         `;
                         tableBody.innerHTML += mainRow;
@@ -209,16 +280,16 @@
                                 <tbody>
                                     ${student.elements.map((item, elementIndex) => {
                                         return `
-                                                                                <tr>
-                                                                                    <td>${elementIndex + 1}</td>
-                                                                                    <td>${data.elements[elementIndex].criteria}</td>
-                                                                                    <td>
-                                                                                        <span class="badge ${item.status === 'Not Competent' ? 'bg-danger' : 'bg-success'}">
-                                                                                            ${item.status}
-                                                                                        </span>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            `;
+                                                            <tr>
+                                                                <td>${elementIndex + 1}</td>
+                                                                <td>${data.elements[elementIndex].criteria}</td>
+                                                                <td>
+                                                                    <span class="badge ${item.status === 'Not Competent' ? 'bg-danger' : 'bg-success'}">
+                                                                        ${item.status}
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                        `;
                                     }).join('')}
                                 </tbody>
                             </table>
@@ -237,7 +308,7 @@
                     $('#manage-table').DataTable();
 
                     // Update export link
-                    document.getElementById("exportToExcelLink").href = `/exam/report/${data.standard.id}/excel`;
+                    document.getElementById("exportToExcelLink").href = `/admin/exam/report/${data.standard.id}/excel`;
                 })
                 .catch(error => console.error('Error:', error));
         }

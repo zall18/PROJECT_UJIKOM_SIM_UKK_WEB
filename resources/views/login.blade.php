@@ -31,11 +31,12 @@
                         class="img-fluid" alt="Phone image">
                 </div>
                 <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-                    <h1>SIM UKK</h1>
+                    <h2>SIM UKK</h2>
+                    <small>**SIM UKK (Sistem Informasi Manajemen Uji Kompetensi Keahlian)** adalah sebuah platform digital yang dirancang untuk mengelola seluruh proses dan data terkait Uji Kompetensi Keahlian (UKK). Sistem ini membantu dalam mengatur standar kompetensi, elemen kompetensi, penilaian, hingga laporan hasil ujian. Dengan SIM UKK, sekolah, penguji, dan peserta dapat dengan mudah mengakses informasi, melakukan penilaian secara terstruktur, dan memastikan transparansi serta akurasi dalam pelaksanaan UKK.</small>
                     <form action="/auth/login" method="post">
                         @csrf
                         <!-- Email input -->
-                        <h3>Sign In</h3>
+                        <h3 class="mt-2">Sign In</h3>
                         <div data-mdb-input-init class="form-outline mb-4">
                             <input type="email" id="form1Example13" class="form-control form-control-lg"
                                 name="email" @required(true) />
@@ -49,13 +50,13 @@
                             <label class="form-label" for="form1Example23">Password</label>
                         </div>
 
-                        <div class="d-flex justify-content-around align-items-center mb-4">
+                        <div class="d-flex justify-content-start align-items-center mb-4">
                             <!-- Checkbox -->
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="form1Example3" name="remember" />
                                 <label class="form-check-label" for="form1Example3"> Remember me </label>
                             </div>
-                            <a href="#!">Forgot password?</a>
+
                         </div>
 
                         <!-- Submit button -->

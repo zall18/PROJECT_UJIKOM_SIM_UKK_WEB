@@ -138,7 +138,8 @@ class UserController extends Controller
             'username' => ['required'],
             'email' => ['required', 'email'],
             'phone' => ['required'],
-            'role' => ['required']
+            'role' => ['required'],
+            'is_active' => ['required'],
         ]);
 
         if ($validate) {
@@ -158,7 +159,7 @@ class UserController extends Controller
                         'password' => $request->password != null ? bcrypt($request->password) : DB::raw('password'),
                         'phone' => $request->phone,
                         'role' => $request->role,
-                        'is_active' => 1
+                        'is_active' => $request->is_active
                     ]);
 
                     Student::where('id', $request->id)->update([
@@ -184,7 +185,7 @@ class UserController extends Controller
                         'password' => $request->password != null ? bcrypt($request->password) : DB::raw('password'),
                         'phone' => $request->phone,
                         'role' => $request->role,
-                        'is_active' => 1
+                        'is_active' => $request->is_active
                     ]);
 
                     Assessor::where('id', $request->id)->update([
@@ -202,7 +203,7 @@ class UserController extends Controller
                     'password' => $request->password != null ? bcrypt($request->password) : DB::raw('password'),
                     'phone' => $request->phone,
                     'role' => "admin",
-                    'is_active' => 1
+                    'is_active' => $request->is_active
                 ]);
                 return back();
             }

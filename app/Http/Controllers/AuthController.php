@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -21,7 +22,14 @@ class AuthController extends Controller
         if ($validate) {
             $remember = $request->has('remember');
 
+
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $remember)) {
+
+                if(Auth::user()->is_active == '0'){
+                    Auth::logout();
+                    Alert::toast('Login Failed', 'error');
+                    return redirect('/');
+                }
 
                 $role = Auth::user()->role;
 
@@ -44,7 +52,7 @@ class AuthController extends Controller
     }
 
     //Logout
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
         return redirect('/');

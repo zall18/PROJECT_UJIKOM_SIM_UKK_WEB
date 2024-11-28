@@ -21,6 +21,7 @@
                 </thead>
                 <tbody class="table-border-bottom-0">
                     @foreach ($competencies as $index => $item)
+                    {{-- @dd($competencies) --}}
                         <tr>
                             <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{ $index + 1 }}</strong>
                             </td>
@@ -29,7 +30,15 @@
                                 {{ $item->unit_title }}
                             </td>
                             <td>{{ $item->unit_description }}</td>
-                            <td>{{ $item->assessor->user->full_name }}</td>
+                            <td>
+                                {{-- @dd($item->standardAssessor) --}}
+                                {{-- <p>
+                                    @foreach ($item->standardAssessor as $test)
+                                        {{ $test->user->full_name }},
+                                    @endforeach
+                                </p> --}}
+                                {{ $item->assessor->user->full_name }}
+                            </td>
                             <td>{{ $item->major->major_name }}</td>
                             <td>
                                 <div class="dropdown">

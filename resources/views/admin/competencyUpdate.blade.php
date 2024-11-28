@@ -63,17 +63,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="basic-icon-default-company">Assessor</label>
-                            <select id="defaultSelect" class="form-select" name="assessor_id">
-                                <option>Default select</option>
-                                @foreach ($assessors as $item)
-                                    <option value="{{ $item->id }}"
-                                        {{ $competency->assessor_id == $item->id ? 'selected' : '' }}>
-                                        {{ $item->user->full_name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+
                         <button type="submit" class="btn btn-primary">Send</button>
                     </form>
                 </div>

@@ -59,7 +59,7 @@
                 <tbody class="table-border-bottom-0">
                     @foreach ($students as $index => $student)
                         <tr>
-                            <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{ $index }}</strong>
+                            <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{ $index + 1 }}</strong>
                             </td>
                             <td>{{ $student['student_name'] }}</td>
                             <td>{{ $student['student_nisn'] }}</td>

@@ -28,7 +28,7 @@
                             <td>
                                 <div class="dropdown">
 
-                                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                    <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown"
                                         aria-expanded="false">Generate</button>
                                     <ul class="dropdown-menu">
                                         <li>
@@ -38,10 +38,11 @@
                                                 @csrf
                                                 <input type="hidden" name="name" value="{{ Auth::user()->full_name }}">
                                                 <input type="hidden" name="program" value="{{ $item['unit_title'] }}">
+                                                <input type="hidden" name="student_id" value="{{ Auth::user()->student->id }}">
                                                 <input type="hidden" name="final_score" value="{{ $item['final_score'] }}">
                                                 <input type="hidden" name="standard_id" value="{{ $item['standard_id'] }}">
                                                 {{-- @dd($item['standard_id']) --}}
-                                                <button class="btn btn-primary" type="submit">View Certificate</button>
+                                                <button class="btn btn-primary btn-sm" type="submit">View Certificate</button>
                                             </form>
                                         </li>
                                         <li>
@@ -55,7 +56,7 @@
                                                 <input type="hidden" name="standard_id"
                                                     value="{{ $item['standard_id'] }}">
                                                 {{-- @dd($item['standard_id']) --}}
-                                                <button class="btn btn-primary" type="submit">Download Certificate</button>
+                                                <button class="btn btn-primary btn-sm" type="submit">Download Certificate</button>
                                             </form>
                                         </li>
                                     </ul>
@@ -68,10 +69,5 @@
                 </tbody>
             </table>
         </div>
-    </div>
-    <!--/ Basic Bootstrap Table -->
-
-    <div class="buy-now">
-        <a href="/major/create" class="btn btn-danger btn-buy-now">Create Major Data</a>
     </div>
 @endsection
