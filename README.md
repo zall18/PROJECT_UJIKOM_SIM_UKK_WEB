@@ -1,66 +1,45 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# SIM UKK (Sistem Informasi Manajemen Uji Kompetensi Keahlian)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**SIM UKK** adalah aplikasi berbasis web yang dikembangkan untuk memfasilitasi proses pelaksanaan Uji Kompetensi Keahlian (UKK) di Sekolah Menengah Kejuruan (SMK).
 
-## About Laravel
+Dibangun menggunakan framework **Laravel**, sistem ini mendigitalkan alur administrasi, mulai dari pendataan peserta dan penguji, pengelolaan standar kompetensi, penilaian (asesmen), hingga pelaporan dan pencetakan sertifikat kompetensi.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📖 Tentang Aplikasi
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Proyek ini bertujuan untuk menggantikan atau melengkapi proses administrasi UKK yang konvensional. Dengan sistem terintegrasi, sekolah dapat mengelola data ujian dengan lebih terstruktur, transparan, dan efisien. Aplikasi ini membagi alur kerja ke dalam beberapa peran pengguna (*multi-role*) untuk memastikan setiap pihak (Admin, Penguji, dan Siswa) mendapatkan akses sesuai tugasnya.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## ✨ Fitur Utama
 
-## Learning Laravel
+Aplikasi ini mencakup berbagai modul fungsional:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 1. Manajemen Data Master (Admin)
+* **Manajemen Jurusan & Kelas:** Pengaturan data kompetensi keahlian.
+* **Manajemen Pengguna:** Pengelolaan akun untuk Admin, Penguji (Assessor), dan Siswa.
+* **Import Data:** Fitur untuk mengunggah data siswa atau pengguna secara massal menggunakan Excel.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 2. Standar Kompetensi
+* **Unit Kompetensi:** Mengelola standar kompetensi, elemen kompetensi, dan kriteria penilaian sesuai kurikulum yang berlaku.
+* **Mapping Penguji:** Menentukan penguji (assessor) yang bertanggung jawab untuk standar atau jurusan tertentu.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 3. Pelaksanaan Ujian & Asesmen
+* **Penjadwalan:** Pengaturan jadwal pelaksanaan UKK.
+* **Proses Penilaian (Assessor):** Antarmuka khusus bagi penguji untuk memberikan nilai kepada siswa berdasarkan elemen kompetensi yang diuji.
+* **Status Kelulusan:** Penentuan status kompeten atau belum kompeten berdasarkan hasil penilaian.
 
-## Laravel Sponsors
+### 4. Pelaporan & Sertifikat
+* **Rekap Nilai:** Laporan hasil ujian siswa secara keseluruhan.
+* **Cetak Sertifikat:** Fitur bagi siswa yang lulus untuk melihat atau mencetak sertifikat kompetensi keahlian mereka.
+* **Ekspor Laporan:** Unduh data laporan hasil ujian ke dalam format Excel.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### 5. Hak Akses Bertingkat
+* **Administrator:** Kontrol penuh atas pengaturan sistem, data induk, dan laporan.
+* **Assessor (Penguji):** Fokus pada penilaian siswa dan melihat daftar peserta ujian.
+* **Student (Siswa):** Akses untuk melihat jadwal, profil diri, hasil ujian, dan sertifikat.
 
-### Premium Partners
+## 💻 Teknologi
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Aplikasi ini dibangun menggunakan teknologi web modern yang stabil:
+* **Framework:** Laravel (PHP)
+* **Database:** MySQL
+* **Frontend:** Blade Templates dengan Bootstrap/Tailwind CSS
+* **Fitur Pendukung:** SweetAlert (Notifikasi), ApexCharts (Visualisasi Data), Maatwebsite Excel (Export/Import).
